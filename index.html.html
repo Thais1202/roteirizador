@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)file:///C:/Users/nfstr/Downloads/roteirizador_v9%20(1).html -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roteirizador de Serviços</title>
+<script src="./Roteirizador de Serviços_files/xlsx.full.min.js.download"></script>
+<style>
+:root{
+  --blue:#1a5fb4;--blue-dk:#0d3f7a;--blue-lt:#e8f0fb;
+  --green:#2d7d32;--green-lt:#e8f5e9;
+  --amber:#e65100;--amber-lt:#fff3e0;
+  --red:#c62828;--red-lt:#ffebee;
+  --purple:#6a1b9a;--purple-lt:#f3e5f5;
+  --gray:#455a64;--gray-lt:#eceff1;
+  --bg:#f0f4f8;--surface:#fff;--border:#d0d9e8;
+  --text:#1c2b3a;--text2:#4a5568;--text3:#8a9ab0;
+  --r:8px;--rl:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+.topbar{background:var(--blue);color:#fff;padding:0 20px;height:52px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.topbar h1{font-size:15px;font-weight:700;flex:1}
+.container{max-width:1100px;margin:0 auto;padding:16px}
+.tabs{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:16px}
+.tab{flex:1;padding:10px 4px;font-size:12px;cursor:pointer;border:none;background:none;color:var(--text2);border-bottom:3px solid transparent;font-weight:600;text-align:center;font-family:inherit}
+.tab.on{color:var(--blue);border-bottom-color:var(--blue);background:var(--blue-lt)}
+.pnl{display:none}.pnl.on{display:block}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:14px 16px;margin-bottom:14px}
+.sec{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}
+.g5{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:10px}
+label{font-size:11px;color:var(--text2);display:block;margin-bottom:3px;font-weight:600}
+input,select{width:100%;padding:7px 10px;font-size:13px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface);color:var(--text);font-family:inherit}
+input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,95,180,.1)}
+.btn{padding:7px 14px;font-size:13px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface);color:var(--text);cursor:pointer;font-weight:600;font-family:inherit}
+.btn:hover{background:#f0f4ff;border-color:var(--blue)}
+.bb{background:var(--blue);color:#fff;border-color:var(--blue)}.bb:hover{background:var(--blue-dk)}
+.bg{background:var(--green);color:#fff;border-color:var(--green)}.bg:hover{background:#1b5e20}
+.br{color:var(--red);border-color:#ef9a9a}.br:hover{background:var(--red-lt)}
+.bw{background:#25D366;color:#fff;border-color:#25D366}
+.bm{background:#ea4335;color:#fff;border-color:#ea4335}
+.bf{width:100%;padding:10px}
+.sm{padding:4px 10px;font-size:11px}
+.tag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
+.tc{background:#e3f2fd;color:#0d47a1}
+.te{background:var(--green-lt);color:#1b5e20}
+.tf{background:var(--amber-lt);color:#bf360c}
+.tr{background:var(--purple-lt);color:#4a148c}
+.ti{background:#fce4ec;color:#880e4f}
+.pv{background:var(--red-lt);color:var(--red)}
+.ph{background:#fff8e1;color:#f57f17}
+.po{background:var(--green-lt);color:var(--green)}
+.pn{background:var(--gray-lt);color:var(--gray)}
+.veh-card{border:1px solid var(--border);border-radius:var(--rl);padding:12px 16px;margin-bottom:10px;background:var(--surface)}
+.veh-card:hover{border-color:var(--blue);background:#fafcff}
+.empty{text-align:center;padding:3rem 1rem;color:var(--text3);font-size:14px}
+.loading{text-align:center;padding:2rem;color:var(--text3)}
+.sp{display:inline-block;width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;margin-right:6px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sync-bar{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);padding:6px 10px;background:#f8faff;border:1px solid #dde8f8;border-radius:var(--r);margin-bottom:10px}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-g{background:#43a047}
+.dot-o{background:#fb8c00;animation:pulse .8s infinite}
+.dot-r{background:#c62828}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.fbtn{padding:4px 12px;font-size:11px;border:1px solid var(--border);border-radius:20px;background:var(--surface);color:var(--text2);cursor:pointer;font-weight:600}
+.fbtn.on{background:var(--blue-lt);color:var(--blue);border-color:#90b8ef}
+.srch{width:100%;padding:8px 12px;font-size:13px;border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;background:var(--surface);color:var(--text);font-family:inherit}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a5fb4,#0d3f7a)}
+.login-box{background:#fff;border-radius:16px;padding:32px;width:100%;max-width:420px}
+.divider{height:1px;background:var(--border);margin:14px 0}
+/* Blocos coleta/entrega */
+.bloco-c{background:#e8f0fb;border:1px solid #b3c8f0;border-radius:var(--rl);padding:12px 14px}
+.bloco-e{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:var(--rl);padding:12px 14px;margin-top:10px}
+.bloco-l{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.bloco-c .bloco-l{color:#0d47a1}
+.bloco-e .bloco-l{color:#1b5e20}
+/* Roteiro */
+.rot-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 14px;background:#f8faff;border:1px solid #dde8f8;border-radius:var(--rl);margin-bottom:14px}
+.step-card{border:1px solid var(--border);border-radius:var(--rl);padding:10px 12px;margin-bottom:6px;cursor:default}
+.step-card.drag-over{border-top:3px solid var(--blue);background:#f0f6ff}
+.step-card.dragging{opacity:.4;border:2px dashed var(--blue)}
+.drag-h{cursor:grab;color:var(--text3);font-size:18px;padding-right:6px;user-select:none;flex-shrink:0}
+.sdot{width:26px;height:26px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.sdot.org{background:var(--blue-lt);border:2px solid var(--blue);color:var(--blue)}
+.sdot.dc{background:#1a5fb4}
+.sdot.de{background:#2d7d32}
+.sdot.df{background:#e65100}
+.sdot.dr{background:#6a1b9a}
+.sdot.di{background:#c62828}
+.sdot.dsc{background:#1a5fb4}
+.sdot.ded{background:#2d7d32}
+/* Status */
+.st-bar{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;padding-top:8px;border-top:1px solid #f0f4f8;align-items:center}
+.st-lbl{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase}
+.stb{padding:3px 10px;font-size:11px;border-radius:20px;border:1.5px solid;cursor:pointer;font-weight:700;font-family:inherit}
+.stb-c{background:#f1f1f1;color:#888;border-color:#ccc}
+.stb-c.on{background:#2d7d32;color:#fff;border-color:#2d7d32}
+.stb-i{background:#f1f1f1;color:#888;border-color:#ccc}
+.stb-i.on{background:#fb8c00;color:#fff;border-color:#fb8c00}
+.stb-x{background:#f1f1f1;color:#888;border-color:#ccc}
+.stb-x.on{background:#c62828;color:#fff;border-color:#c62828}
+.st-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:700;margin-bottom:6px}
+.st-badge-c{background:#e8f5e9;color:#1b5e20}
+.st-badge-i{background:#fff8e1;color:#f57f17}
+.st-badge-x{background:#ffebee;color:#c62828}
+/* Maps */
+.mc{background:#fce4e4;border:1.5px solid #ea4335;border-radius:var(--r);padding:6px 10px;display:flex;align-items:center;gap:7px;text-decoration:none;flex:1;min-width:130px;max-width:200px}
+.mc:hover{background:#ea4335;color:#fff}
+.mc.mcc{background:#e8f0fb;border-color:#1a5fb4}
+.mc:hover .mc-t,.mc:hover .mc-s{color:#fff}
+.mc-t{font-size:11px;font-weight:700;color:#c62828}
+.mcc .mc-t{color:#0d47a1}
+.mc-s{font-size:10px;color:var(--text3);margin-top:1px}
+/* Svc flow card */
+.svc-flow{display:flex;align-items:stretch;border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-top:6px}
+.sfc{flex:1;padding:8px 10px;background:#e8f0fb}
+.sfa{display:flex;align-items:center;padding:0 10px;background:#f0f4f8;font-size:18px;color:var(--text3);font-weight:700}
+.sfe{flex:1;padding:8px 10px;background:#e8f5e9}
+.sft{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.sfc .sft{color:#0d47a1}
+.sfe .sft{color:#1b5e20}
+.sfa2{font-size:12px;color:var(--text);font-weight:500}
+.sfs{font-size:11px;color:var(--text2)}
+.metric-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
+.metric{background:#f8faff;border-radius:var(--r);padding:10px 12px;border:1px solid #dde8f8}
+.ml{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.mv{font-size:20px;font-weight:800;color:var(--text);margin-top:3px}
+.saved-card{border:1px solid var(--border);border-radius:var(--rl);padding:11px 14px;margin-bottom:8px;background:var(--surface);display:flex;align-items:center;gap:10px}
+.saved-card:hover{background:#f8faff}
+.add-btn-row{display:flex;align-items:center;justify-content:center;margin:2px 0;opacity:0;transition:opacity .15s}
+.steps-wrap:hover .add-btn-row{opacity:.7}
+.add-btn{cursor:pointer;background:#f0f6ff;border:1px dashed var(--blue);border-radius:20px;padding:3px 14px;font-size:11px;color:var(--blue);font-weight:600}
+.add-btn:hover{background:var(--blue-lt);border-style:solid}
+.inline-form{background:#f8faff;border:1px solid #90b8ef;border-radius:var(--rl);padding:12px 14px;margin:6px 0}
+@media(max-width:700px){.g2,.g3,.g4,.g5{grid-template-columns:1fr}.metric-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div id="login-screen" class="login-wrap" style="display: none;">
+  <div class="login-box">
+    <div style="font-size:40px;text-align:center;margin-bottom:8px">🗺️</div>
+    <div style="font-size:22px;font-weight:800;text-align:center;margin-bottom:4px">Roteirizador</div>
+    <div style="font-size:13px;color:var(--text3);text-align:center;margin-bottom:24px">Sistema compartilhado · Dados em nuvem</div>
+    <div style="margin-bottom:10px"><label>Seu nome</label><input id="ln" placeholder="Ex: João Silva"></div>
+    <div style="margin-bottom:16px"><label>Empresa / Equipe</label><input id="le" placeholder="Ex: Transportes ABC"></div>
+    <button class="btn bb bf" id="btn-login" onclick="doLogin()" disabled="">Conectando...</button>
+    <div id="login-msg" style="font-size: 12px; color: rgb(136, 136, 136); text-align: center; margin-top: 12px;">Verificando conexão...</div>
+  </div>
+</div>
+
+<div id="main-screen" style="display: block;">
+  <div class="topbar">
+    <h1>🗺️ Roteirizador de Serviços</h1>
+    <span id="tu" style="font-size:12px;opacity:.85">Thais · Tri</span>
+    <div id="sdot" class="dot dot-g" style="margin-left:8px"></div>
+    <button class="btn sm" style="background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.3);margin-left:8px" onclick="doLogout()">Sair</button>
+  </div>
+  <div class="container">
+    <div class="sync-bar"><div id="sdot2" class="dot dot-o"></div><span id="stxt">Sincronizando...</span><span style="flex:1"></span><span id="slsync" style="font-size:11px;color:var(--text3)"></span></div>
+    <div class="tabs">
+      <button class="tab on" onclick="ST(&#39;v&#39;)">🚛 Veículos</button>
+      <button class="tab" onclick="ST(&#39;s&#39;)">📦 Serviços (<span id="cs">0</span>)</button>
+      <button class="tab" onclick="ST(&#39;r&#39;)">🗺️ Roteiros</button>
+      <button class="tab" onclick="ST(&#39;h&#39;)">💾 Histórico (<span id="ch">0</span>)</button>
+    </div>
+
+    <!-- VEÍCULOS -->
+    <div id="pnl-v" class="pnl on">
+      <div class="card">
+        <div class="sec">Novo Veículo</div>
+        <div class="g5" style="margin-bottom:10px">
+          <div><label>Identificação</label><input id="v-nom" placeholder="Truck 01"></div>
+          <div><label>Placa *</label><input id="v-pla" placeholder="ABC-1234" style="text-transform:uppercase"></div>
+          <div><label>Motorista *</label><input id="v-mot" placeholder="Nome completo"></div>
+          <div><label>Tipo</label><select id="v-tip"><option>Truck</option><option>VUC</option><option>Furgão</option><option>Caminhonete</option><option>Van</option><option>Moto</option><option>Bi-Trem</option><option>Carreta</option><option>Outro</option></select></div>
+          <div><label>Cap. (serviços)</label><input type="number" id="v-cap" value="20" min="1" max="200"></div>
+        </div>
+        <div class="g5">
+          <div><label>Cidade base</label><input id="v-cid" placeholder="Atibaia"></div>
+          <div><label>Estado base</label><select id="v-est"><option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option selected="">SP</option><option>SE</option><option>TO</option></select></div>
+          <div><label>Endereço galpão</label><input id="v-gal" placeholder="Rua, número, cidade"></div>
+          <div><label>Horário saída</label><input type="time" id="v-hor" value="07:00"></div>
+          <div><label>KM saída galpão</label><input type="number" id="v-kmi" placeholder="12500" min="0"></div>
+        </div>
+        <button class="btn bb" style="margin-top:12px;min-width:180px" onclick="addVeiculo()">+ Adicionar Veículo</button>
+      </div>
+      <div id="lista-v"><div class="loading"><span class="sp"></span>Carregando...</div></div>
+    </div>
+
+    <!-- SERVIÇOS -->
+    <div id="pnl-s" class="pnl">
+      <div class="card">
+        <div class="sec">Novo Serviço</div>
+        <div class="g4" style="margin-bottom:10px">
+          <div><label>Descrição *</label><input id="s-nom" placeholder="Ex: Equipamento XYZ"></div>
+          <div><label>Tipo de operação</label>
+            <select id="s-tip" onchange="onTipo()">
+              <option value="coleta_entrega">📦→🚚 Coleta e Entrega</option>
+              <option value="entrega_direta">🚚 Só Entrega (do galpão)</option>
+              <option value="so_coleta">📦 Só Coleta (para o galpão)</option>
+              <option value="fixacao">🔧 Fixação</option>
+              <option value="remanejamento">🔄 Remanejamento</option>
+              <option value="icamento">🏗️ Içamento</option>
+            </select>
+          </div>
+          <div><label>Nº NF</label><input id="s-nf" placeholder="Ex: 123456"></div>
+          <div><label>Nº Série / Patrimônio</label><input id="s-ser" placeholder="Ex: SN-00123"></div>
+        </div>
+        <div class="g4" style="margin-bottom:10px">
+          <div><label>Qtd. Caixas / Pallets</label><input type="number" id="s-qtd" placeholder="Ex: 10" min="0"></div>
+          <div><label>Duração por parada (min)</label><input type="number" id="s-dur" value="30" min="5" max="480"></div>
+          <div><label>Data limite</label><input type="date" id="s-dat"></div>
+          <div><label>Veículo</label><select id="s-vei"><option value="">-- Qualquer --</option></select></div>
+        </div>
+        <div style="margin-bottom:10px"><label>Observação</label><input id="s-obs" placeholder="Informações adicionais"></div>
+        <div class="divider"></div>
+
+        <!-- BLOCO COLETA -->
+        <div class="bloco-c" id="bloco-c">
+          <div class="bloco-l" id="bloco-c-lbl">📦 Ponto de Coleta — onde vai buscar</div>
+          <div class="g4" style="margin-bottom:8px">
+            <div style="grid-column:span 2"><label>Cliente / Empresa (coleta)</label><input id="cc-cli" placeholder="Nome da empresa"></div>
+            <div><label>Data/hora coleta (se exigida)</label><input type="datetime-local" id="cc-dt"></div>
+            <div><label>Duração na coleta (min)</label><input type="number" id="cc-dur" placeholder="Ex: 60" min="5"></div>
+          </div>
+          <div class="g4" style="margin-bottom:8px">
+            <div style="grid-column:span 2"><label>Endereço coleta</label><input id="cc-end" placeholder="Rua, número, bairro"></div>
+            <div><label>Cidade *</label><input id="cc-cid" placeholder="São Paulo"></div>
+            <div><label>Estado</label><select id="cc-est"><option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option selected="">SP</option><option>SE</option><option>TO</option></select></div>
+          </div>
+          <div class="g3">
+            <div><label>CEP</label><input id="cc-cep" placeholder="00000-000" maxlength="9"></div>
+            <div><label>KM início</label><input type="number" id="cc-km" placeholder="12550"></div>
+            <div><label>Lat,Lng (opcional)</label><input id="cc-geo" placeholder="-23.55,-46.63"></div>
+          </div>
+        </div>
+
+        <!-- BLOCO ENTREGA -->
+        <div class="bloco-e" id="bloco-e">
+          <div class="bloco-l" id="bloco-e-lbl">🚚 Ponto de Entrega — onde vai deixar</div>
+          <div class="g4" style="margin-bottom:8px">
+            <div style="grid-column:span 2"><label>Cliente / Empresa (entrega)</label><input id="ce-cli" placeholder="Nome da empresa"></div>
+            <div><label>Data/hora entrega (se exigida)</label><input type="datetime-local" id="ce-dt"></div>
+            <div><label>Duração na entrega (min)</label><input type="number" id="ce-dur" placeholder="Ex: 60" min="5"></div>
+          </div>
+          <div class="g4" style="margin-bottom:8px">
+            <div style="grid-column:span 2"><label>Endereço entrega</label><input id="ce-end" placeholder="Rua, número, bairro"></div>
+            <div><label>Cidade *</label><input id="ce-cid" placeholder="Fortaleza"></div>
+            <div><label>Estado</label><select id="ce-est"><option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option selected="">SP</option><option>SE</option><option>TO</option></select></div>
+          </div>
+          <div class="g3">
+            <div><label>CEP</label><input id="ce-cep" placeholder="00000-000" maxlength="9"></div>
+            <div><label>KM fim</label><input type="number" id="ce-km" placeholder="12600"></div>
+            <div><label>Lat,Lng (opcional)</label><input id="ce-geo" placeholder="-3.72,-38.54"></div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <button class="btn bb bf" onclick="addServico()">+ Adicionar Serviço</button>
+          <button class="btn sm" onclick="document.getElementById(&#39;csv-in&#39;).click()">📂 CSV</button>
+          <input type="file" id="csv-in" accept=".csv" style="display:none" onchange="importCSV(event)">
+        </div>
+      </div>
+
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;align-items:center">
+        <span style="font-size:11px;color:var(--text3);font-weight:700">Filtrar:</span>
+        <button class="fbtn on" onclick="setFilt(this,&#39;all&#39;)">Todos</button>
+        <button class="fbtn" onclick="setFilt(this,&#39;coleta_entrega&#39;)">📦→🚚 Col/Ent</button>
+        <button class="fbtn" onclick="setFilt(this,&#39;entrega_direta&#39;)">🚚 Entrega</button>
+        <button class="fbtn" onclick="setFilt(this,&#39;so_coleta&#39;)">📦 Coleta</button>
+        <button class="fbtn" onclick="setFilt(this,&#39;fixacao&#39;)">🔧 Fixação</button>
+        <button class="fbtn" onclick="setFilt(this,&#39;remanejamento&#39;)">🔄 Reman.</button>
+        <button class="fbtn" onclick="setFilt(this,&#39;icamento&#39;)">🏗️ Içamento</button>
+        <button class="btn br sm" style="margin-left:auto" onclick="limparSvcs()">🗑️ Limpar tudo</button>
+      </div>
+      <input class="srch" id="s-srch" placeholder="🔍 Buscar nome, cidade, NF, cliente..." oninput="renderSvcs()">
+      <div id="lista-s"><div class="loading"><span class="sp"></span>Carregando...</div></div>
+      <button class="btn bb bf" style="margin-top:8px" onclick="ST(&#39;r&#39;)">Ir para Roteiros →</button>
+    </div>
+
+    <!-- ROTEIROS -->
+    <div id="pnl-r" class="pnl"><div id="rot-body"></div></div>
+
+    <!-- HISTÓRICO -->
+    <div id="pnl-h" class="pnl"><div id="hist-body"><div class="loading"><span class="sp"></span>Carregando...</div></div></div>
+  </div>
+</div>
+
+<!-- MODAL EDIÇÃO -->
+<div id="modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:999;overflow-y:auto;padding:20px">
+  <div style="background:#fff;border-radius:16px;padding:24px;max-width:780px;margin:0 auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <h3 style="font-size:16px;font-weight:700" id="modal-title">Editar</h3>
+      <button class="btn br sm" onclick="closeModal()">✕ Fechar</button>
+    </div>
+    <div id="modal-body"></div>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="btn bb bf" onclick="saveModal()">💾 Salvar</button>
+      <button class="btn bf" onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== CONFIG =====
+const SB_URL='https://qrrfsdyzzcxqycmmhxvs.supabase.co';
+const SB_KEY='sb_publishable_qAlGngO3WTp-ImpTkML3nw_vHwsgai0';
+
+// ===== DB =====
+async function dbq(path,method,body){
+  const d=document.getElementById('sdot2'),t=document.getElementById('stxt');
+  if(d){d.className='dot dot-o';t.textContent='Sincronizando...';}
+  try{
+    const r=await fetch(SB_URL+'/rest/v1/'+path,{method:method||'GET',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Prefer':method==='POST'?'return=representation':''},body:body?JSON.stringify(body):undefined});
+    const data=r.status===204?[]:await r.json();
+    if(!r.ok)throw new Error(data.message||data.code||r.status);
+    if(d){d.className='dot dot-g';t.textContent='Conectado · dados em tempo real';}
+    const sl=document.getElementById('slsync');
+    if(sl){const n=new Date();sl.textContent='Sync '+p(n.getHours())+':'+p(n.getMinutes())+':'+p(n.getSeconds());}
+    return data;
+  }catch(e){if(d){d.className='dot dot-r';t.textContent='Erro de conexão';}throw e;}
+}
+const dbGet=(t,q)=>dbq(t+'?'+(q||'')+'&order=id.asc');
+const dbPost=(t,b)=>dbq(t,'POST',b);
+const dbPatch=(t,id,b)=>dbq(t+'?id=eq.'+id,'PATCH',b);
+const dbDel=(t,id)=>dbq(t+'?id=eq.'+id,'DELETE');
+
+// ===== CONSTANTS =====
+const UF=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
+const TLABEL={coleta_entrega:'Coleta→Entrega',entrega_direta:'Entrega Direta',so_coleta:'Só Coleta',fixacao:'Fixação',remanejamento:'Remanejamento',icamento:'Içamento'};
+const TCLASS={coleta:'dc',entrega:'de',fixacao:'df',remanejamento:'dr',icamento:'di',so_coleta:'dsc',entrega_direta:'ded'};
+const VCORES=['#1a5fb4','#2d7d32','#e65100','#6a1b9a','#00695c','#c62828','#0277bd'];
+const COORDS={SP:{la:-23.55,lo:-46.63},RJ:{la:-22.91,lo:-43.17},MG:{la:-19.92,lo:-43.94},ES:{la:-20.32,lo:-40.34},PR:{la:-25.43,lo:-49.27},SC:{la:-27.60,lo:-48.52},RS:{la:-30.03,lo:-51.22},BA:{la:-12.97,lo:-38.51},PE:{la:-8.05,lo:-34.88},CE:{la:-3.72,lo:-38.54},GO:{la:-16.68,lo:-49.25},DF:{la:-15.78,lo:-47.93},PA:{la:-1.46,lo:-48.50},AM:{la:-3.10,lo:-60.02},MT:{la:-15.60,lo:-56.10},MS:{la:-20.44,lo:-54.65},RN:{la:-5.79,lo:-35.21},AC:{la:-9.97,lo:-67.81},AL:{la:-9.66,lo:-35.74},AP:{la:0.03,lo:-51.07},MA:{la:-2.55,lo:-44.30},PB:{la:-7.12,lo:-34.86},PI:{la:-5.09,lo:-42.81},RO:{la:-8.76,lo:-63.90},RR:{la:2.82,lo:-60.67},SE:{la:-10.91,lo:-37.07},TO:{la:-10.25,lo:-48.33}};
+const ECOL={'SP':'#1a5fb4','RJ':'#c62828','MG':'#2d7d32','CE':'#6a1b9a','PE':'#ad1457','BA':'#e65100','PA':'#00796b','AM':'#4527a0','PR':'#4a148c','SC':'#006064','RS':'#827717','GO':'#0277bd','DF':'#558b2f','MT':'#5d4037','MS':'#00838f','ES':'#00695c','RN':'#d84315','AL':'#bf360c','AC':'#37474f','AP':'#1565c0','MA':'#558b2f','PB':'#6a1b9a','PI':'#2e7d32','RO':'#e65100','RR':'#00695c','SE':'#c62828','TO':'#0277bd'};
+const TODAY=new Date().toISOString().split('T')[0];
+
+let USER=null,veiculos=[],servicos=[],historico=[],filt='all',rotAtivo=null,dragIdx=null,modalId=null,modalTipo=null;
+
+// ===== UTILS =====
+function p(n){return String(n).padStart(2,'0')}
+function addM(t,m){const[h,mm]=t.split(':').map(Number);const tot=h*60+mm+Math.round(m);return p(Math.floor(tot/60)%24)+':'+p(tot%60)}
+function toM(t){if(!t)return null;const[h,m]=t.split(':').map(Number);return h*60+m}
+function fromM(m){return p(Math.floor(m/60)%24)+':'+p(m%60)}
+function diffD(d){if(!d)return 9999;const t=new Date();t.setHours(0,0,0,0);const ds=d.includes('T')?d.split('T')[0]:d;return Math.round((new Date(ds+'T00:00:00')-t)/86400000)}
+function getPrio(d){const n=diffD(d);if(n<0)return{l:'Atrasado',c:'pv',s:n-1000};if(n===0)return{l:'Hoje',c:'ph',s:0};if(n===1)return{l:'Amanhã',c:'ph',s:1};if(n<=3)return{l:n+'d',c:'ph',s:n};if(n===9999)return{l:'Sem data',c:'pn',s:9999};return{l:n+'d',c:'po',s:n}}
+function fmtD(d){if(!d)return'';const ds=d.includes('T')?d.split('T')[0]:d;const[y,m,dd]=ds.split('-');return dd+'/'+m+'/'+y}
+function fmtDT(d){if(!d)return'';const parts=d.split('T');const[y,m,dd]=parts[0].split('-');return dd+'/'+m+'/'+y+(parts[1]?' '+parts[1].slice(0,5):'')}
+function geo(str,uf){if(str){const p=str.split(',');if(p.length===2&&!isNaN(p[0])&&!isNaN(p[1]))return{la:+p[0],lo:+p[1]};}return COORDS[uf]||{la:-15,lo:-50}}
+function hav(la1,lo1,la2,lo2){const R=6371,d1=(la2-la1)*Math.PI/180,d2=(lo2-lo1)*Math.PI/180;const a=Math.sin(d1/2)**2+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(d2/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a))}
+function mapsQ(end,cid,uf,coords){const q=encodeURIComponent([end,cid,uf,'Brasil'].filter(Boolean).join(', '));if(coords){const g=geo(coords,uf);return'https://www.google.com/maps/search/?api=1&query='+g.la+','+g.lo;}return'https://www.google.com/maps/search/?api=1&query='+q;}
+function mapsNav(fe,fc,fuf,fgeo,te,tc,tuf,tgeo){const f=geo(fgeo,fuf),t2=geo(tgeo,tuf);const o=fgeo?f.la+','+f.lo:encodeURIComponent([fe,fc,fuf].filter(Boolean).join(', '));const d=tgeo?t2.la+','+t2.lo:encodeURIComponent([te,tc,tuf].filter(Boolean).join(', '));return'https://www.google.com/maps/dir/?api=1&origin='+o+'&destination='+d+'&travelmode=driving';}
+function ecol(uf){return ECOL[uf]||'#455a64'}
+function stEmoji(s){return{concluido:'✅',improdutiva:'⚠️',cancelado:'❌'}[s]||''}
+function stLabel(s){return{concluido:'Concluído',improdutiva:'Improdutiva',cancelado:'Cancelado'}[s]||'Pendente'}
+
+// ===== ESTADOS =====
+function fillUF(){
+  ['v-est','cc-est','ce-est'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.innerHTML=UF.map(e=>'<option'+(e==='SP'?' selected':'')+'>'+e+'</option>').join('');
+  });
+}
+
+// ===== LOGIN =====
+async function doLogin(){
+  const nome=document.getElementById('ln').value.trim();
+  const emp=document.getElementById('le').value.trim();
+  if(!nome){alert('Informe seu nome.');return;}
+  const btn=document.getElementById('btn-login'),msg=document.getElementById('login-msg');
+  btn.textContent='Conectando...';btn.disabled=true;
+  msg.textContent='Verificando conexão...';msg.style.color='#888';
+  try{
+    const ctrl=new AbortController();
+    setTimeout(()=>ctrl.abort(),10000);
+    const r=await fetch(SB_URL+'/rest/v1/veiculos?limit=1',{headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},signal:ctrl.signal});
+    if(!r.ok)throw new Error('Erro '+r.status);
+    USER={nome,empresa:emp||'Geral'};
+    fillUF();
+    document.getElementById('s-dat').value=TODAY;
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('main-screen').style.display='block';
+    document.getElementById('tu').textContent=nome+' · '+(emp||'Geral');
+    await Promise.all([loadV(),loadS(),loadH()]);
+  }catch(e){
+    const er=e.name==='AbortError'?'Tempo esgotado. Verifique sua internet.':'Erro: '+e.message;
+    msg.textContent='❌ '+er;msg.style.color='#c62828';
+  }
+  btn.textContent='Entrar no sistema';btn.disabled=false;
+}
+function doLogout(){USER=null;document.getElementById('main-screen').style.display='none';document.getElementById('login-screen').style.display='flex';}
+
+// ===== LOAD =====
+async function loadV(){try{veiculos=await dbGet('veiculos');}catch(e){veiculos=[];}renderV();fillVeiSel();}
+async function loadS(){try{servicos=await dbGet('servicos');}catch(e){servicos=[];}renderSvcs();updCnts();}
+async function loadH(){try{historico=await dbGet('roteiros','order=criado_em.desc');}catch(e){historico=[];}updCnts();if(document.getElementById('pnl-h').classList.contains('on'))renderH();}
+
+function updCnts(){document.getElementById('cs').textContent=servicos.length;document.getElementById('ch').textContent=historico.length;}
+function fillVeiSel(){const s=document.getElementById('s-vei');s.innerHTML='<option value="">-- Qualquer --</option>';veiculos.forEach(v=>s.innerHTML+='<option value="'+v.id+'">'+v.placa+' · '+v.motorista+'</option>');}
+
+// ===== TIPO CHANGE =====
+function onTipo(){
+  const t=document.getElementById('s-tip').value;
+  const bc=document.getElementById('bloco-c'),be=document.getElementById('bloco-e');
+  const bcl=document.getElementById('bloco-c-lbl'),bel=document.getElementById('bloco-e-lbl');
+  // Coleta block: hidden only for entrega_direta
+  bc.style.display=t==='entrega_direta'?'none':'block';
+  // Entrega block: hidden for so_coleta and local services
+  be.style.display=(t==='so_coleta'||t==='fixacao'||t==='remanejamento'||t==='icamento')?'none':'block';
+  // Labels
+  if(bcl){
+    if(t==='so_coleta')bcl.textContent='📦 Ponto de Coleta — onde vai buscar';
+    else if(['fixacao','remanejamento','icamento'].includes(t))bcl.textContent='📍 Local do Serviço';
+    else bcl.textContent='📦 Ponto de Coleta — onde vai buscar';
+  }
+  if(bel){
+    if(t==='entrega_direta')bel.textContent='🚚 Ponto de Entrega (saiu do galpão)';
+    else bel.textContent='🚚 Ponto de Entrega — onde vai deixar';
+  }
+}
+
+// ===== VEÍCULOS =====
+async function addVeiculo(){
+  const pla=document.getElementById('v-pla').value.trim().toUpperCase();
+  const mot=document.getElementById('v-mot').value.trim();
+  if(!pla||!mot){alert('Placa e motorista obrigatórios.');return;}
+  const obj={nome:document.getElementById('v-nom').value.trim(),placa:pla,motorista:mot,tipo:document.getElementById('v-tip').value,cidade:document.getElementById('v-cid').value.trim(),estado:document.getElementById('v-est').value,galpao:document.getElementById('v-gal').value.trim(),saida:document.getElementById('v-hor').value||'07:00',cap:parseInt(document.getElementById('v-cap').value)||20,km_ini:parseInt(document.getElementById('v-kmi').value)||0,added_by:USER.nome};
+  try{const res=await dbPost('veiculos',obj);veiculos.push(res[0]||{...obj,id:Date.now()});}catch(e){alert('Erro: '+e.message);return;}
+  renderV();fillVeiSel();
+  ['v-nom','v-pla','v-mot','v-cid','v-gal','v-kmi'].forEach(id=>document.getElementById(id).value='');
+}
+async function delV(id){if(!confirm('Remover veículo?'))return;try{await dbDel('veiculos',id);}catch(e){alert('Erro: '+e.message);return;}veiculos=veiculos.filter(v=>v.id!==id);renderV();fillVeiSel();}
+
+function renderV(){
+  const el=document.getElementById('lista-v');
+  if(!veiculos.length){el.innerHTML='<div class="empty">Nenhum veículo cadastrado.</div>';return;}
+  el.innerHTML=veiculos.map((v,i)=>{
+    const c=VCORES[i%VCORES.length];
+    const n=servicos.filter(s=>!s.veiculo_id||String(s.veiculo_id)===String(v.id)).length;
+    return '<div class="veh-card"><div style="display:flex;align-items:center;gap:14px">'
+      +'<div style="width:44px;height:44px;border-radius:50%;background:'+c+'18;border:2px solid '+c+'55;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:'+c+';flex-shrink:0">'+v.placa.replace(/[^A-Z0-9]/g,'').slice(0,3)+'</div>'
+      +'<div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700">'+v.nome+' <span style="font-weight:400;color:var(--text2);font-size:12px">· '+v.placa+' · '+v.tipo+'</span></div>'
+      +'<div style="font-size:12px;color:var(--text2)">👤 '+v.motorista+' · 📍 '+(v.cidade||'Base')+', '+v.estado+' · ⏰ '+v.saida+' · 📦 Cap.'+v.cap+' · 🛣️ KM '+(v.km_ini||0)+'</div>'
+      +(v.galpao?'<div style="font-size:11px;color:var(--text3)">Galpão: '+v.galpao+'</div>':'')
+      +'<div style="font-size:11px;color:var(--text3)">'+n+' serviço(s) · por '+v.added_by+'</div></div>'
+      +'<div style="display:flex;gap:6px">'
+      +'<button class="btn sm" onclick="editV('+v.id+')">✏️</button>'
+      +'<button class="btn bb sm" onclick="gerarRota('+v.id+')">🗺️ Roteirizar</button>'
+      +'<button class="btn br sm" onclick="delV('+v.id+')">🗑️</button>'
+      +'</div></div></div>';
+  }).join('');
+}
+
+// ===== SERVIÇOS =====
+function gV(id){return document.getElementById(id)?.value.trim()||'';}
+function gN(id){return parseInt(document.getElementById(id)?.value)||null;}
+
+async function addServico(){
+  const nome=gV('s-nom'),tipo=document.getElementById('s-tip').value;
+  const cc_cid=gV('cc-cid'),ce_cid=gV('ce-cid');
+  if(!nome){alert('Descrição obrigatória.');return;}
+  if(tipo==='entrega_direta'&&!ce_cid){alert('Cidade de entrega obrigatória.');return;}
+  if(tipo==='so_coleta'&&!cc_cid){alert('Cidade de coleta obrigatória.');return;}
+  if(tipo==='coleta_entrega'&&(!cc_cid||!ce_cid)){alert('Cidades de coleta e entrega obrigatórias.');return;}
+  if(['fixacao','remanejamento','icamento'].includes(tipo)&&!cc_cid){alert('Cidade do local do serviço obrigatória.');return;}
+  const obj={
+    nome,tipo,nf:gV('s-nf'),serie:gV('s-ser'),
+    qtd:gV('s-qtd')||null,dur:parseInt(document.getElementById('s-dur').value)||30,
+    data:gV('s-dat')||null,obs:gV('s-obs'),
+    veiculo_id:gV('s-vei')||null,added_by:USER.nome,
+    cc_cliente:gV('cc-cli'),cc_dt:gV('cc-dt')||null,cc_dur:gN('cc-dur'),
+    cc_end:gV('cc-end'),cc_cidade:cc_cid,cc_estado:document.getElementById('cc-est').value,
+    cc_cep:gV('cc-cep'),cc_km:gV('cc-km')||null,cc_geo:gV('cc-geo'),
+    ce_cliente:gV('ce-cli'),ce_dt:gV('ce-dt')||null,ce_dur:gN('ce-dur'),
+    ce_end:gV('ce-end'),ce_cidade:ce_cid,ce_estado:document.getElementById('ce-est').value,
+    ce_cep:gV('ce-cep'),ce_km:gV('ce-km')||null,ce_geo:gV('ce-geo'),
+  };
+  try{const res=await dbPost('servicos',obj);servicos.push(res[0]||{...obj,id:Date.now()});}catch(e){alert('Erro ao salvar: '+e.message);return;}
+  updCnts();renderSvcs();renderV();
+  ['s-nom','s-nf','s-ser','s-obs','cc-cli','cc-end','cc-cid','cc-cep','cc-km','cc-geo','cc-dt','ce-cli','ce-end','ce-cid','ce-cep','ce-km','ce-geo','ce-dt'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('s-qtd').value='';document.getElementById('s-dur').value='30';document.getElementById('s-dat').value=TODAY;
+  document.getElementById('cc-dur').value='';document.getElementById('ce-dur').value='';
+}
+async function delS(id){servicos=servicos.filter(s=>s.id!==id);updCnts();renderSvcs();renderV();try{await dbDel('servicos',id);}catch(e){}}
+async function limparSvcs(){if(!confirm('Remover TODOS os serviços?'))return;try{await dbq('servicos','DELETE');servicos=[];updCnts();renderSvcs();renderV();}catch(e){alert('Erro: '+e.message);}}
+
+function setFilt(el,f){filt=f;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderSvcs();}
+
+function renderSvcs(){
+  const q=(document.getElementById('s-srch')?.value||'').toLowerCase();
+  const list=servicos.filter(s=>{
+    if(filt!=='all'&&s.tipo!==filt)return false;
+    if(q&&!`${s.nome}${s.cc_cidade}${s.ce_cidade}${s.nf||''}${s.cc_cliente||''}${s.ce_cliente||''}`.toLowerCase().includes(q))return false;
+    return true;
+  }).sort((a,b)=>getPrio(a.data).s-getPrio(b.data).s);
+  const el=document.getElementById('lista-s');
+  if(!list.length){el.innerHTML='<div class="empty">Nenhum serviço.</div>';return;}
+  el.innerHTML=list.map((s,i)=>{
+    const p=getPrio(s.data);
+    const vn=s.veiculo_id?veiculos.find(v=>String(v.id)===String(s.veiculo_id))?.placa||'':'';
+    const tipo=s.tipo||'coleta_entrega';
+    // Build flow card
+    let flow='';
+    if(tipo==='entrega_direta'){
+      flow='<div class="svc-flow"><div class="sfe" style="flex:1"><div class="sft">🚚 Entrega (do galpão)</div><div class="sfa2">'+(s.ce_cliente||'—')+'</div><div class="sfs">'+[s.ce_end,s.ce_cidade,s.ce_estado].filter(Boolean).join(', ')+'</div>'+(s.ce_dt?'<div style="font-size:10px;color:#1b5e20;margin-top:2px">⏰ '+fmtDT(s.ce_dt)+'</div>':'')+'<a href="'+mapsQ(s.ce_end,s.ce_cidade,s.ce_estado,s.ce_geo)+'" target="_blank" style="display:inline-block;margin-top:5px;font-size:11px;font-weight:700;color:#1b5e20;text-decoration:none">📍 Abrir no Maps</a></div></div>';
+    }else if(tipo==='so_coleta'){
+      flow='<div class="svc-flow"><div class="sfc" style="flex:1"><div class="sft">📦 Coleta (para o galpão)</div><div class="sfa2">'+(s.cc_cliente||'—')+'</div><div class="sfs">'+[s.cc_end,s.cc_cidade,s.cc_estado].filter(Boolean).join(', ')+'</div>'+(s.cc_dt?'<div style="font-size:10px;color:#0d47a1;margin-top:2px">⏰ '+fmtDT(s.cc_dt)+'</div>':'')+'<a href="'+mapsQ(s.cc_end,s.cc_cidade,s.cc_estado,s.cc_geo)+'" target="_blank" style="display:inline-block;margin-top:5px;font-size:11px;font-weight:700;color:#0d47a1;text-decoration:none">📍 Abrir no Maps</a></div></div>';
+    }else if(['fixacao','remanejamento','icamento'].includes(tipo)){
+      flow='<div class="svc-flow"><div class="sfc" style="flex:1"><div class="sft">📍 Local do serviço</div><div class="sfa2">'+(s.cc_cliente||'—')+'</div><div class="sfs">'+[s.cc_end,s.cc_cidade,s.cc_estado].filter(Boolean).join(', ')+'</div>'+(s.cc_dt?'<div style="font-size:10px;color:#0d47a1;margin-top:2px">⏰ '+fmtDT(s.cc_dt)+'</div>':'')+'<a href="'+mapsQ(s.cc_end,s.cc_cidade,s.cc_estado,s.cc_geo)+'" target="_blank" style="display:inline-block;margin-top:5px;font-size:11px;font-weight:700;color:#e65100;text-decoration:none">📍 Abrir no Maps</a></div></div>';
+    }else{
+      flow='<div class="svc-flow">'
+        +'<div class="sfc"><div class="sft">📦 Coleta</div><div class="sfa2">'+(s.cc_cliente||'—')+'</div><div class="sfs">'+[s.cc_end,s.cc_cidade,s.cc_estado].filter(Boolean).join(', ')+'</div>'+(s.cc_dt?'<div style="font-size:10px;color:#0d47a1;margin-top:2px">⏰ '+fmtDT(s.cc_dt)+'</div>':'')+'<a href="'+mapsQ(s.cc_end,s.cc_cidade,s.cc_estado,s.cc_geo)+'" target="_blank" style="display:inline-block;margin-top:5px;font-size:11px;font-weight:700;color:#0d47a1;text-decoration:none">📍 Abrir no Maps</a></div>'
+        +'<div class="sfa">→</div>'
+        +'<div class="sfe"><div class="sft">🚚 Entrega</div><div class="sfa2">'+(s.ce_cliente||'—')+'</div><div class="sfs">'+[s.ce_end,s.ce_cidade,s.ce_estado].filter(Boolean).join(', ')+'</div>'+(s.ce_dt?'<div style="font-size:10px;color:#1b5e20;margin-top:2px">⏰ '+fmtDT(s.ce_dt)+'</div>':'')+'<a href="'+mapsQ(s.ce_end,s.ce_cidade,s.ce_estado,s.ce_geo)+'" target="_blank" style="display:inline-block;margin-top:5px;font-size:11px;font-weight:700;color:#1b5e20;text-decoration:none">📍 Abrir no Maps</a></div>'
+        +'</div>';
+    }
+    return '<div class="card" style="padding:10px 14px;margin-bottom:8px">'
+      +'<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:6px">'
+      +'<div style="width:24px;height:24px;border-radius:50%;background:#eef2fb;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--blue);flex-shrink:0;margin-top:1px">'+(i+1)+'</div>'
+      +'<div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:700">'+s.nome+(s.cc_cliente&&tipo==='coleta_entrega'?' <span style="font-weight:400;color:var(--text2)">· '+s.cc_cliente+'</span>':'')+'</div>'
+      +'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:3px">'
+      +'<span class="tag" style="background:#f0f4f8;color:var(--text2)">'+TLABEL[tipo]+'</span>'
+      +'<span class="tag '+p.c+'">'+p.l+(s.data?' · '+fmtD(s.data):'')+'</span>'
+      +(s.nf?'<span class="tag" style="background:#e8f5e9;color:#1b5e20">NF '+s.nf+'</span>':'')
+      +(s.serie?'<span class="tag" style="background:#e3f2fd;color:#0d47a1">S/N '+s.serie+'</span>':'')
+      +(s.qtd?'<span class="tag" style="background:#fff3e0;color:#bf360c">'+s.qtd+' vol.</span>':'')
+      +(vn?'<span class="tag" style="background:var(--gray-lt);color:var(--gray)">'+vn+'</span>':'')
+      +'<span style="font-size:10px;color:var(--text3)">'+s.dur+'min · '+s.added_by+'</span>'
+      +'</div></div>'
+      +'<button class="btn sm" onclick="editS('+s.id+')">✏️</button>'
+      +'<button class="btn br sm" onclick="delS('+s.id+')">✕</button>'
+      +'</div>'+flow
+      +(s.obs?'<div style="font-size:11px;color:var(--amber);margin-top:6px">📝 '+s.obs+'</div>':'')
+      +'</div>';
+  }).join('');
+}
+
+function importCSV(e){alert('Use o formulário ou contate o suporte para o template CSV.');e.target.value='';}
+
+// ===== ROUTERIZACAO =====
+// Cada serviço vira 1 ou 2 paradas
+function svcToParadas(s){
+  const tipo=s.tipo||'coleta_entrega';
+  const gc=geo(s.cc_geo,s.cc_estado),ge=geo(s.ce_geo,s.ce_estado);
+  // Hora fixa: só usa se o campo dt foi preenchido
+  const hc=s.cc_dt?s.cc_dt.split('T')[1]?.slice(0,5)||null:null;
+  const he=s.ce_dt?s.ce_dt.split('T')[1]?.slice(0,5)||null:null;
+  const coleta={
+    svcId:s.id,svcNome:s.nome,svcTipo:tipo,stepTipo:'coleta',
+    nf:s.nf,serie:s.serie,qtd:s.qtd,obs:s.obs,
+    cliente:s.cc_cliente,dt:s.cc_dt,horaFixa:hc,
+    dur:s.cc_dur||s.dur||30,
+    end:s.cc_end,cidade:s.cc_cidade,estado:s.cc_estado,cep:s.cc_cep,
+    geo:s.cc_geo,la:gc.la,lo:gc.lo,
+    status:'pendente',horaReal:null,
+  };
+  const entrega={
+    svcId:s.id,svcNome:s.nome,svcTipo:tipo,stepTipo:'entrega',
+    nf:s.nf,serie:s.serie,qtd:s.qtd,obs:s.obs,
+    cliente:s.ce_cliente,dt:s.ce_dt,horaFixa:he,
+    dur:s.ce_dur||s.dur||30,
+    end:s.ce_end,cidade:s.ce_cidade,estado:s.ce_estado,cep:s.ce_cep,
+    geo:s.ce_geo,la:ge.la,lo:ge.lo,
+    status:'pendente',horaReal:null,
+  };
+  if(tipo==='so_coleta'){coleta.stepTipo='so_coleta';return[coleta];}
+  if(tipo==='entrega_direta'){entrega.stepTipo='entrega_direta';return[entrega];}
+  if(['fixacao','remanejamento','icamento'].includes(tipo)){coleta.stepTipo=tipo;coleta.svcTipo=tipo;return[coleta];}
+  return[coleta,entrega];
+}
+
+// Nearest-neighbor com restrição de precedência coleta→entrega
+function roteirizar(svcs,baseLa,baseLo){
+  const urgentes=new Set(svcs.filter(s=>getPrio(s.data).s<=0).map(s=>s.id));
+  const svcsOrd=[...svcs].sort((a,b)=>{
+    const pa=getPrio(a.data).s,pb=getPrio(b.data).s;return pa-pb;
+  });
+  const todasParadas=[];
+  svcsOrd.forEach(s=>svcToParadas(s).forEach(p=>todasParadas.push(p)));
+  const visitados=new Set(),coletasDone=new Set();
+  const result=[];
+  let curLa=baseLa,curLo=baseLo;
+  let safety=todasParadas.length*4;
+  while(result.length<todasParadas.length&&safety-->0){
+    const disp=todasParadas.filter(p=>{
+      if(visitados.has(p.svcId+'_'+p.stepTipo))return false;
+      if(p.stepTipo==='entrega'&&!coletasDone.has(p.svcId))return false;
+      return true;
+    });
+    if(!disp.length)break;
+    // Urgentes primeiro
+    const urgDisp=disp.filter(p=>urgentes.has(p.svcId)&&(p.stepTipo==='coleta'||p.stepTipo==='so_coleta'||['fixacao','remanejamento','icamento'].includes(p.stepTipo)));
+    const pool=urgDisp.length>0?urgDisp:disp;
+    let bi=0,bd=Infinity;
+    pool.forEach((p,i)=>{const d=hav(curLa,curLo,p.la,p.lo);if(d<bd){bd=d;bi=i;}});
+    const chosen=pool[bi];
+    chosen.distKm=Math.round(bd);
+    result.push(chosen);
+    visitados.add(chosen.svcId+'_'+chosen.stepTipo);
+    if(chosen.stepTipo==='coleta')coletasDone.add(chosen.svcId);
+    curLa=chosen.la;curLo=chosen.lo;
+  }
+  return result;
+}
+
+function recalc(){
+  if(!rotAtivo)return;
+  const{v,steps}=rotAtivo;
+  let curM=toM(v.saida||'07:00');
+  let pLa=COORDS[v.estado]?.la||(-15),pLo=COORDS[v.estado]?.lo||(-50);
+  steps.forEach((s,i)=>{
+    const distKm=s.distKm||Math.round(hav(pLa,pLo,s.la,s.lo));
+    const vel=distKm>200?80:60;
+    const travM=Math.max(8,Math.round((distKm/vel)*60));
+    s.distKm=distKm;s.travM=travM;s.ordem=i+1;
+    if(s.status==='concluido'&&s.horaReal){
+      // Já executado: usa hora real registrada
+      const rm=toM(s.horaReal);
+      s.cheg=s.horaReal;
+      s.said=fromM(rm+s.dur);
+      curM=rm+s.dur;
+    }else if(s.horaFixa){
+      // Horário fixo exigido pelo cliente: respeita ele, espera se necessário
+      const fixM=toM(s.horaFixa);
+      const chegCalc=curM+travM;
+      const chegM=Math.max(chegCalc,fixM);
+      s.cheg=fromM(chegM);
+      s.said=fromM(chegM+s.dur);
+      curM=chegM+s.dur;
+    }else{
+      // Livre: calcula por distância
+      const chegM=curM+travM;
+      s.cheg=fromM(chegM);
+      s.said=fromM(chegM+s.dur);
+      curM=chegM+s.dur;
+    }
+    pLa=s.la;pLo=s.lo;
+  });
+}
+
+function gerarRota(vid){
+  const v=veiculos.find(x=>x.id===vid);if(!v)return;
+  const svcs=servicos.filter(s=>!s.veiculo_id||String(s.veiculo_id)===String(vid));
+  if(!svcs.length){alert('Nenhum serviço disponível para este veículo.');return;}
+  // Se já existe roteiro para este veículo, pergunta
+  if(rotAtivo&&String(rotAtivo.v.id)===String(vid)&&rotAtivo.steps.length>0){
+    const manter=confirm('Já existe um roteiro para este veículo.\n\nOK = Manter sua ordem e só atualizar horários\nCancelar = Reorganizar pelo algoritmo de menor KM');
+    if(manter){
+      // Adiciona novos serviços no final
+      const noRot=new Set(rotAtivo.steps.map(s=>s.svcId));
+      svcs.filter(s=>!noRot.has(s.id)).forEach(s=>svcToParadas(s).forEach(p=>rotAtivo.steps.push(p)));
+      // Remove deletados
+      const ativ=new Set(svcs.map(s=>s.id));
+      rotAtivo.steps=rotAtivo.steps.filter(s=>ativ.has(s.svcId));
+      rotAtivo.v=v;recalc();renderRot();ST('r');return;
+    }
+  }
+  const base=COORDS[v.estado]||{la:-15,lo:-50};
+  rotAtivo={v,steps:roteirizar(svcs.slice(0,v.cap*2),base.la,base.lo)};
+  recalc();renderRot();ST('r');
+}
+
+function recalcManter(){if(!rotAtivo)return;recalc();renderRot();}
+function reorganizar(){
+  if(!rotAtivo)return;
+  if(!confirm('Reorganizar pelo algoritmo de menor KM? Sua ordem atual será perdida.'))return;
+  const vid=rotAtivo.v.id;
+  const svcs=servicos.filter(s=>!s.veiculo_id||String(s.veiculo_id)===String(vid));
+  const base=COORDS[rotAtivo.v.estado]||{la:-15,lo:-50};
+  const statusMap={};
+  rotAtivo.steps.forEach(s=>{statusMap[s.svcId+'_'+s.stepTipo]={status:s.status,horaReal:s.horaReal};});
+  const steps=roteirizar(svcs.slice(0,rotAtivo.v.cap*2),base.la,base.lo);
+  steps.forEach(s=>{const k=s.svcId+'_'+s.stepTipo;if(statusMap[k]){s.status=statusMap[k].status;s.horaReal=statusMap[k].horaReal;}});
+  rotAtivo.steps=steps;recalc();renderRot();
+}
+
+// ===== STATUS =====
+function setStatus(idx,status){
+  if(!rotAtivo||!rotAtivo.steps[idx])return;
+  const s=rotAtivo.steps[idx];
+  const novo=s.status===status?'pendente':status;
+  if(novo==='concluido'){
+    const agora=new Date();
+    const def=p(agora.getHours())+':'+p(agora.getMinutes());
+    const h=prompt('Horário real de conclusão (HH:MM):',def);
+    if(h===null)return;
+    s.horaReal=h.trim().slice(0,5)||def;
+    s.status='concluido';
+  }else{
+    s.status=novo;
+    if(novo==='pendente')s.horaReal=null;
+  }
+  recalc();renderRot();
+  setTimeout(()=>{const el=document.getElementById('step-'+idx);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});},80);
+}
+
+// ===== RENDER ROTEIRO =====
+function renderRot(){
+  if(!rotAtivo){document.getElementById('rot-body').innerHTML='<div class="empty">Nenhum roteiro gerado.</div>';return;}
+  const{v,steps}=rotAtivo;
+  const totM=steps.reduce((a,s)=>a+s.travM+s.dur,0);
+  const hFim=fromM(toM(v.saida||'07:00')+totM);
+  const ests=[...new Set(steps.map(s=>s.estado))];
+  const kmIda=steps.reduce((a,s)=>a+(s.distKm||0),0);
+  const kmTotal=kmIda+Math.round(kmIda*.85);
+  const venc=steps.filter(s=>s.dt&&diffD(s.dt)<0).length;
+  const hh=Math.floor(totM/60),mm=totM%60;
+  const nSvcs=new Set(steps.map(s=>s.svcId)).size;
+  let html='';
+  if(venc>0)html+='<div style="background:var(--red-lt);color:var(--red);border:1px solid #ef9a9a;border-radius:var(--r);padding:9px 13px;font-size:13px;margin-bottom:10px;font-weight:600">⚠️ '+venc+' parada(s) com prazo vencido — priorizadas no início.</div>';
+  html+='<div style="background:var(--blue-lt);color:var(--blue-dk);border:1px solid #90b8ef;border-radius:var(--r);padding:9px 13px;font-size:13px;margin-bottom:10px">🚛 <strong>'+v.nome+'</strong> · '+v.placa+' · Motorista: <strong>'+v.motorista+'</strong></div>';
+  // Toolbar
+  html+='<div class="rot-bar">';
+  html+='<button class="btn sm" style="background:#fff3e0;color:#e65100;border-color:#ffcc80" onclick="recalcManter()" title="Mantém ordem, só recalcula horários">🔄 Recalcular horários</button>';
+  html+='<button class="btn sm" style="background:#f3e5f5;color:#6a1b9a;border-color:#ce93d8" onclick="reorganizar()" title="Reorganiza pelo menor KM">🔀 Menor KM</button>';
+  html+='<span style="flex:1"></span>';
+  html+='<button class="btn bb sm" onclick="salvarRot()">💾 Salvar</button>';
+  html+='<button class="btn bw sm" onclick="exportWA()">📱 WhatsApp</button>';
+  html+='<button class="btn bm sm" onclick="abrirMaps()">🗺️ Maps</button>';
+  html+='<button class="btn bg sm" onclick="exportXLS()">📊 Excel</button>';
+  html+='</div>';
+  // Métricas
+  html+='<div class="metric-grid">';
+  html+='<div class="metric"><div class="ml">Serviços</div><div class="mv">'+nSvcs+'</div></div>';
+  html+='<div class="metric"><div class="ml">Paradas</div><div class="mv">'+steps.length+'</div></div>';
+  html+='<div class="metric"><div class="ml">KM ida+volta</div><div class="mv">~'+kmTotal+'km</div></div>';
+  html+='<div class="metric"><div class="ml">Duração</div><div class="mv">'+hh+'h'+p(mm)+'m</div></div>';
+  html+='<div class="metric"><div class="ml">Retorno previsto</div><div class="mv">'+hFim+'</div></div>';
+  html+='</div>';
+  // Odômetro
+  html+='<div class="card" style="padding:10px 14px;margin-bottom:14px"><div class="sec" style="margin-bottom:8px">🛣️ Odômetro</div><div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center">';
+  html+='<div><div style="font-size:11px;color:var(--text3)">Saída galpão</div><div style="font-size:18px;font-weight:800">'+((v.km_ini||0)).toLocaleString('pt-BR')+' km</div></div>';
+  html+='<div style="font-size:20px;color:var(--text3)">→</div>';
+  html+='<div><div style="font-size:11px;color:var(--text3)">Retorno est.</div><div style="font-size:18px;font-weight:800;color:var(--green)">'+((v.km_ini||0)+kmTotal).toLocaleString('pt-BR')+' km</div></div>';
+  html+='<div style="font-size:20px;color:var(--text3)">·</div>';
+  html+='<div><div style="font-size:11px;color:var(--text3)">Total percorrido</div><div style="font-size:18px;font-weight:800;color:var(--amber)">~'+kmTotal.toLocaleString('pt-BR')+' km</div></div>';
+  html+='</div></div>';
+  // Paradas
+  html+='<div class="card" style="padding:12px 14px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div class="sec" style="margin:0">📍 Sequência de paradas</div><div style="font-size:11px;color:var(--text2)"><span style="display:inline-block;width:10px;height:10px;background:#1a5fb4;border-radius:50%;margin-right:3px"></span>Coleta <span style="display:inline-block;width:10px;height:10px;background:#2d7d32;border-radius:50%;margin:0 3px 0 8px"></span>Entrega</div></div>';
+  // Saída
+  html+='<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #f0f4f8">';
+  html+='<div style="width:26px;flex-shrink:0"></div><div class="sdot org">S</div>';
+  html+='<div style="flex:1;padding-left:4px"><div style="font-size:13px;font-weight:700">Saída — '+(v.galpao?v.galpao+', ':'')+v.cidade+', '+v.estado+'</div><div style="font-size:11px;color:var(--text2)">⏰ '+v.saida+' · KM '+(v.km_ini||0).toLocaleString('pt-BR')+'</div></div>';
+  html+='</div>';
+  html+='<div class="steps-wrap" id="steps-wrap">';
+  steps.forEach((s,i)=>{
+    const pr=getPrio(s.dt||null);
+    const cor=ecol(s.estado);
+    const sc=TCLASS[s.stepTipo]||'dc';
+    const isC=s.stepTipo==='coleta'||s.stepTipo==='so_coleta';
+    const prev=i>0?steps[i-1]:null;
+    const navLnk=prev
+      ?mapsNav(prev.end,prev.cidade,prev.estado,prev.geo,s.end,s.cidade,s.estado,s.geo)
+      :mapsNav(v.galpao,v.cidade,v.estado,'',s.end,s.cidade,s.estado,s.geo);
+    const addr=[s.end,s.cidade,s.estado,s.cep].filter(Boolean).join(', ');
+    const tipoLabel={coleta:'📦 Coleta',entrega:'🚚 Entrega',so_coleta:'📦 Só Coleta',entrega_direta:'🚚 Entrega Direta',fixacao:'🔧 Fixação',remanejamento:'🔄 Remanejamento',icamento:'🏗️ Içamento'}[s.stepTipo]||s.stepTipo;
+    // Status visual
+    const stBg={concluido:'#e8f5e9',improdutiva:'#fff8e1',cancelado:'#ffebee'}[s.status]||'';
+    const stCo={concluido:'#1b5e20',improdutiva:'#f57f17',cancelado:'#c62828'}[s.status]||'';
+    const stOp=s.status==='cancelado'?'0.55':s.status==='improdutiva'?'0.8':'1';
+    html+='<div class="add-btn-row"><div class="add-btn" onclick="showAdd('+i+')">+ inserir parada aqui</div></div>';
+    html+='<div id="add-form-'+i+'" style="display:none"></div>';
+    html+='<div class="step-card" id="step-'+i+'" style="opacity:'+stOp+';border-left:4px solid '+(s.status&&s.status!=='pendente'?stCo:'')+';'+(stBg?'background:'+stBg+';':'')+'" draggable="true" ondragstart="onDS(event,'+i+')" ondragover="onDO(event,'+i+')" ondrop="onDD(event,'+i+')" ondragleave="onDL(event)">';
+    // Status badge se ativo
+    if(s.status&&s.status!=='pendente'){
+      html+='<div style="display:flex;align-items:center;gap:6px;padding:4px 10px;margin-bottom:6px;border-radius:6px;font-size:12px;font-weight:700;background:'+stBg+';color:'+stCo+'">';
+      html+='<span style="font-size:15px">'+stEmoji(s.status)+'</span><span>'+stLabel(s.status).toUpperCase()+(s.horaReal?' · '+s.horaReal:'')+'</span></div>';
+    }
+    html+='<div style="display:flex;align-items:flex-start;gap:8px">';
+    html+='<div class="drag-h">⠿</div>';
+    html+='<div class="sdot '+sc+'">'+s.ordem+'</div>';
+    html+='<div style="flex:1;min-width:0">';
+    html+='<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">';
+    html+='<span style="font-size:13px;font-weight:700">'+s.svcNome+'</span>';
+    if(s.cliente)html+='<span style="font-size:11px;color:var(--text2)">· '+s.cliente+'</span>';
+    html+='<span class="tag" style="background:'+(isC?'#e3f2fd':'#e8f5e9')+';color:'+(isC?'#0d47a1':'#1b5e20')+'">'+tipoLabel+'</span>';
+    html+='<span class="tag" style="background:'+cor+'18;color:'+cor+';border:1px solid '+cor+'44;font-size:10px">'+s.estado+'</span>';
+    html+='<span style="font-size:10px;color:var(--text3)">~'+s.distKm+'km</span>';
+    html+='</div>';
+    html+='<div style="font-size:11px;color:var(--text2);margin-top:1px">'+addr+'</div>';
+    html+='<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:3px;align-items:center">';
+    if(s.dt)html+='<span class="tag '+pr.c+'">'+pr.l+' · '+fmtDT(s.dt)+'</span>';
+    if(s.nf)html+='<span class="tag" style="background:#e8f5e9;color:#1b5e20">NF '+s.nf+'</span>';
+    if(s.serie)html+='<span class="tag" style="background:#e3f2fd;color:#0d47a1">S/N '+s.serie+'</span>';
+    if(s.qtd)html+='<span class="tag" style="background:#fff3e0;color:#bf360c">'+s.qtd+' vol.</span>';
+    html+='<span style="font-size:10px;color:var(--text3)">⏰ Cheg '+s.cheg+' · Saída '+s.said+' · '+s.dur+'min'+(s.horaFixa?' · 📌 Fix.'+s.horaFixa:'')+'</span>';
+    html+='</div>';
+    if(s.obs)html+='<div style="font-size:11px;color:var(--amber);margin-top:2px">📝 '+s.obs+'</div>';
+    // Maps buttons
+    html+='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">';
+    html+='<a href="'+mapsQ(s.end,s.cidade,s.estado,s.geo)+'" target="_blank" class="mc'+(isC?' mcc':'')+'" title="Ver endereço">';
+    html+='<span style="font-size:16px">'+(isC?'📦':'🚚')+'</span><div><div class="mc-t">'+(isC?'Ver coleta':'Ver entrega')+'</div><div class="mc-s">'+s.cidade+', '+s.estado+'</div></div></a>';
+    html+='<a href="'+navLnk+'" target="_blank" class="mc" title="Navegar até aqui">';
+    html+='<span style="font-size:16px">🧭</span><div><div class="mc-t">Navegar até aqui</div><div class="mc-s">Da parada anterior</div></div></a>';
+    html+='</div>';
+    // Status buttons
+    html+='<div class="st-bar"><span class="st-lbl">Status:</span>';
+    html+='<button class="stb stb-c'+(s.status==='concluido'?' on':'')+'" onclick="setStatus('+i+',\'concluido\')">✅ Concluído</button>';
+    html+='<button class="stb stb-i'+(s.status==='improdutiva'?' on':'')+'" onclick="setStatus('+i+',\'improdutiva\')">⚠️ Improdutiva</button>';
+    html+='<button class="stb stb-x'+(s.status==='cancelado'?' on':'')+'" onclick="setStatus('+i+',\'cancelado\')">❌ Cancelado</button>';
+    html+='</div>';
+    html+='</div>';
+    html+='<div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0">';
+    html+='<button class="btn sm" onclick="editStep('+i+')">✏️</button>';
+    html+='<button class="btn br sm" onclick="removeStep('+i+')">✕</button>';
+    html+='</div>';
+    html+='</div></div>';
+  });
+  // Botão add no final
+  html+='<div class="add-btn-row"><div class="add-btn" onclick="showAdd('+steps.length+')">+ inserir parada aqui</div></div>';
+  html+='<div id="add-form-'+steps.length+'" style="display:none"></div>';
+  html+='</div>'; // steps-wrap
+  // Retorno
+  html+='<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;margin-top:4px">';
+  html+='<div style="width:26px;flex-shrink:0"></div><div class="sdot org">R</div>';
+  html+='<div style="flex:1;padding-left:4px"><div style="font-size:13px;font-weight:700">Retorno — '+v.cidade+', '+v.estado+'</div><div style="font-size:11px;color:var(--text2)">⏰ Previsão '+hFim+' · KM est. '+((v.km_ini||0)+kmTotal).toLocaleString('pt-BR')+'</div></div>';
+  html+='</div>';
+  html+='</div>'; // card paradas
+  // Maps por estado
+  const byEst={};steps.forEach(s=>{if(!byEst[s.estado])byEst[s.estado]=[];byEst[s.estado].push(s);});
+  html+='<div class="card" style="padding:10px 14px"><div class="sec" style="margin-bottom:8px">🗺️ Google Maps por estado</div><div style="display:flex;gap:8px;flex-wrap:wrap">';
+  Object.keys(byEst).forEach(e=>{const c=ecol(e);html+='<button class="btn sm" style="background:'+c+';color:#fff;border-color:'+c+'" onclick="abrirMapsEst(\''+e+'\')">📍 '+e+' ('+byEst[e].length+'p)</button>';});
+  html+='<button class="btn bm sm" onclick="abrirMaps()">🗺️ Rota completa</button>';
+  html+='</div></div>';
+  document.getElementById('rot-body').innerHTML=html;
+}
+
+// ===== DRAG & DROP =====
+function onDS(e,i){dragIdx=i;e.currentTarget.classList.add('dragging');}
+function onDO(e,i){e.preventDefault();e.currentTarget.classList.add('drag-over');}
+function onDL(e){e.currentTarget.classList.remove('drag-over');}
+function onDD(e,i){
+  e.preventDefault();e.currentTarget.classList.remove('drag-over');
+  if(dragIdx===null||dragIdx===i)return;
+  const moved=rotAtivo.steps.splice(dragIdx,1)[0];
+  rotAtivo.steps.splice(i,0,moved);
+  dragIdx=null;recalc();renderRot();
+}
+
+// ===== ADICIONAR PARADA =====
+function showAdd(after){
+  document.querySelectorAll('[id^="add-form-"]').forEach(el=>{el.style.display='none';el.innerHTML='';});
+  const el=document.getElementById('add-form-'+after);if(!el)return;
+  const noRot=new Set(rotAtivo.steps.map(s=>s.svcId));
+  const disp=servicos.filter(s=>!noRot.has(s.id)&&(!s.veiculo_id||String(s.veiculo_id)===String(rotAtivo.v.id)));
+  el.innerHTML='<div class="inline-form"><div class="sec">➕ Inserir parada</div>'
+    +'<div style="margin-bottom:10px"><label>Selecionar serviço cadastrado</label>'
+    +'<select id="add-sel" style="margin-bottom:6px"><option value="">-- Selecione --</option>'
+    +disp.map(s=>'<option value="'+s.id+'">['+TLABEL[s.tipo]+'] '+s.nome+' · '+s.cc_cidade+(s.ce_cidade&&s.tipo==='coleta_entrega'?'→'+s.ce_cidade:'')+( s.data?' · '+fmtD(s.data):'')+'</option>').join('')
+    +'</select><button class="btn bb sm" onclick="doAddSel('+after+')">+ Inserir</button></div>'
+    +'<div style="display:flex;gap:8px;margin-top:6px"><button class="btn br sm" onclick="cancelAdd('+after+')">✕ Cancelar</button></div></div>';
+  el.style.display='block';
+  setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+function doAddSel(after){
+  const val=document.getElementById('add-sel').value;
+  if(!val){alert('Selecione um serviço.');return;}
+  const svc=servicos.find(s=>String(s.id)===String(val));if(!svc)return;
+  const paradas=svcToParadas(svc);
+  const idx=after>=rotAtivo.steps.length?rotAtivo.steps.length:after;
+  rotAtivo.steps.splice(idx,0,...paradas);
+  recalc();renderRot();
+}
+function cancelAdd(i){const el=document.getElementById('add-form-'+i);if(el){el.style.display='none';el.innerHTML='';}}
+function removeStep(i){
+  const s=rotAtivo.steps[i];
+  if(s.stepTipo==='coleta'){
+    const temEnt=rotAtivo.steps.some(x=>x.svcId===s.svcId&&x.stepTipo==='entrega');
+    if(temEnt&&!confirm('Remover a coleta também removerá a entrega correspondente. Confirma?'))return;
+    rotAtivo.steps=rotAtivo.steps.filter(x=>x.svcId!==s.svcId);
+  }else{
+    if(!confirm('Remover esta parada?'))return;
+    rotAtivo.steps.splice(i,1);
+  }
+  recalc();renderRot();
+}
+
+// ===== EDITAR STEP =====
+function editStep(i){
+  const s=rotAtivo.steps[i];if(!s)return;
+  const svc=servicos.find(x=>x.id===s.svcId);
+  if(svc){editS(svc.id);}
+  else{alert('Serviço original não encontrado. Edite diretamente na aba Serviços.');}
+}
+
+// ===== EDITAR VEÍCULO =====
+function editV(id){
+  const v=veiculos.find(x=>x.id===id);if(!v)return;
+  modalId=id;modalTipo='veiculo';
+  document.getElementById('modal-title').textContent='Editar Veículo: '+v.placa;
+  document.getElementById('modal-body').innerHTML=
+    '<div class="g3" style="margin-bottom:10px"><div><label>Identificação</label><input id="ef-nom" value="'+(v.nome||'')+'"></div><div><label>Placa</label><input id="ef-pla" value="'+v.placa+'" style="text-transform:uppercase"></div><div><label>Motorista</label><input id="ef-mot" value="'+v.motorista+'"></div></div>'
+    +'<div class="g4" style="margin-bottom:10px"><div><label>Tipo</label><select id="ef-tip">'+['Truck','VUC','Furgão','Caminhonete','Van','Moto','Bi-Trem','Carreta','Outro'].map(t=>'<option'+(t===v.tipo?' selected':'')+'>'+t+'</option>').join('')+'</select></div><div><label>Cidade</label><input id="ef-cid" value="'+(v.cidade||'')+'"></div><div><label>Estado</label><select id="ef-est">'+UF.map(e=>'<option'+(e===v.estado?' selected':'')+'>'+e+'</option>').join('')+'</select></div><div><label>Capacidade</label><input type="number" id="ef-cap" value="'+v.cap+'"></div></div>'
+    +'<div class="g3"><div><label>Galpão</label><input id="ef-gal" value="'+(v.galpao||'')+'"></div><div><label>Horário saída</label><input type="time" id="ef-hor" value="'+v.saida+'"></div><div><label>KM saída</label><input type="number" id="ef-kmi" value="'+(v.km_ini||0)+'"></div></div>';
+  document.getElementById('modal').style.display='block';
+}
+
+// ===== EDITAR SERVIÇO =====
+function editS(id){
+  const s=servicos.find(x=>x.id===id);if(!s)return;
+  modalId=id;modalTipo='servico';
+  document.getElementById('modal-title').textContent='Editar Serviço: '+s.nome;
+  const tipo=s.tipo||'coleta_entrega';
+  const showC=tipo!=='entrega_direta';
+  const showE=!['so_coleta','fixacao','remanejamento','icamento'].includes(tipo);
+  document.getElementById('modal-body').innerHTML=
+    '<div class="g4" style="margin-bottom:10px"><div><label>Descrição</label><input id="ef-nom" value="'+(s.nome||'')+'"></div>'
+    +'<div><label>Tipo</label><select id="ef-tip"><option value="coleta_entrega"'+(tipo==='coleta_entrega'?' selected':'')+'>Coleta→Entrega</option><option value="entrega_direta"'+(tipo==='entrega_direta'?' selected':'')+'>Entrega Direta</option><option value="so_coleta"'+(tipo==='so_coleta'?' selected':'')+'>Só Coleta</option><option value="fixacao"'+(tipo==='fixacao'?' selected':'')+'>Fixação</option><option value="remanejamento"'+(tipo==='remanejamento'?' selected':'')+'>Remanejamento</option><option value="icamento"'+(tipo==='icamento'?' selected':'')+'>Içamento</option></select></div>'
+    +'<div><label>NF</label><input id="ef-nf" value="'+(s.nf||'')+'"></div><div><label>Nº Série</label><input id="ef-ser" value="'+(s.serie||'')+'"></div></div>'
+    +'<div class="g4" style="margin-bottom:10px"><div><label>Qtd</label><input type="number" id="ef-qtd" value="'+(s.qtd||'')+'"></div><div><label>Duração base (min)</label><input type="number" id="ef-dur" value="'+(s.dur||30)+'"></div><div><label>Data limite</label><input type="date" id="ef-dat" value="'+(s.data||'')+'"></div><div><label>Veículo</label><select id="ef-vei"><option value="">-- Qualquer --</option>'+veiculos.map(v=>'<option value="'+v.id+'"'+(String(s.veiculo_id)===String(v.id)?' selected':'')+'>'+v.placa+' · '+v.motorista+'</option>').join('')+'</select></div></div>'
+    +'<div style="margin-bottom:10px"><label>Observação</label><input id="ef-obs" value="'+(s.obs||'')+'"></div>'
+    +'<div class="divider"></div>'
+    +(showC?'<div class="bloco-c" style="margin-bottom:10px"><div class="bloco-l">📦 Coleta / Local do Serviço</div><div class="g3" style="margin-bottom:8px"><div><label>Cliente</label><input id="ef-cc-cli" value="'+(s.cc_cliente||'')+'"></div><div><label>Data/hora coleta</label><input type="datetime-local" id="ef-cc-dt" value="'+(s.cc_dt||'')+'"></div><div><label>Duração na coleta (min)</label><input type="number" id="ef-cc-dur" value="'+(s.cc_dur||'')+'"></div></div><div class="g4" style="margin-bottom:8px"><div style="grid-column:span 2"><label>Endereço</label><input id="ef-cc-end" value="'+(s.cc_end||'')+'"></div><div><label>Cidade</label><input id="ef-cc-cid" value="'+(s.cc_cidade||'')+'"></div><div><label>Estado</label><select id="ef-cc-est">'+UF.map(e=>'<option'+(e===s.cc_estado?' selected':'')+'>'+e+'</option>').join('')+'</select></div></div><div class="g3"><div><label>CEP</label><input id="ef-cc-cep" value="'+(s.cc_cep||'')+'"></div><div><label>KM início</label><input type="number" id="ef-cc-km" value="'+(s.cc_km||'')+'"></div><div><label>Lat,Lng</label><input id="ef-cc-geo" value="'+(s.cc_geo||'')+'"></div></div></div>':'')
+    +(showE?'<div class="bloco-e"><div class="bloco-l">🚚 Entrega</div><div class="g3" style="margin-bottom:8px"><div><label>Cliente</label><input id="ef-ce-cli" value="'+(s.ce_cliente||'')+'"></div><div><label>Data/hora entrega</label><input type="datetime-local" id="ef-ce-dt" value="'+(s.ce_dt||'')+'"></div><div><label>Duração na entrega (min)</label><input type="number" id="ef-ce-dur" value="'+(s.ce_dur||'')+'"></div></div><div class="g4" style="margin-bottom:8px"><div style="grid-column:span 2"><label>Endereço</label><input id="ef-ce-end" value="'+(s.ce_end||'')+'"></div><div><label>Cidade</label><input id="ef-ce-cid" value="'+(s.ce_cidade||'')+'"></div><div><label>Estado</label><select id="ef-ce-est">'+UF.map(e=>'<option'+(e===s.ce_estado?' selected':'')+'>'+e+'</option>').join('')+'</select></div></div><div class="g3"><div><label>CEP</label><input id="ef-ce-cep" value="'+(s.ce_cep||'')+'"></div><div><label>KM fim</label><input type="number" id="ef-ce-km" value="'+(s.ce_km||'')+'"></div><div><label>Lat,Lng</label><input id="ef-ce-geo" value="'+(s.ce_geo||'')+'"></div></div></div>':'');
+  document.getElementById('modal').style.display='block';
+}
+
+async function saveModal(){
+  if(!modalId)return;
+  if(modalTipo==='veiculo'){
+    const obj={nome:document.getElementById('ef-nom').value.trim(),placa:document.getElementById('ef-pla').value.trim().toUpperCase(),motorista:document.getElementById('ef-mot').value.trim(),tipo:document.getElementById('ef-tip').value,cidade:document.getElementById('ef-cid').value.trim(),estado:document.getElementById('ef-est').value,cap:parseInt(document.getElementById('ef-cap').value)||20,galpao:document.getElementById('ef-gal').value.trim(),saida:document.getElementById('ef-hor').value,km_ini:parseInt(document.getElementById('ef-kmi').value)||0};
+    try{await dbPatch('veiculos',modalId,obj);}catch(e){alert('Erro: '+e.message);return;}
+    const v=veiculos.find(x=>x.id===modalId);if(v)Object.assign(v,obj);renderV();fillVeiSel();
+  }else{
+    const gef=id=>document.getElementById(id)?.value.trim()||'';
+    const obj={nome:gef('ef-nom'),tipo:document.getElementById('ef-tip').value,nf:gef('ef-nf'),serie:gef('ef-ser'),qtd:gef('ef-qtd')||null,dur:parseInt(document.getElementById('ef-dur').value)||30,data:gef('ef-dat')||null,obs:gef('ef-obs'),veiculo_id:gef('ef-vei')||null,
+      cc_cliente:gef('ef-cc-cli'),cc_dt:gef('ef-cc-dt')||null,cc_dur:parseInt(document.getElementById('ef-cc-dur')?.value)||null,cc_end:gef('ef-cc-end'),cc_cidade:gef('ef-cc-cid'),cc_estado:document.getElementById('ef-cc-est')?.value||'SP',cc_cep:gef('ef-cc-cep'),cc_km:gef('ef-cc-km')||null,cc_geo:gef('ef-cc-geo'),
+      ce_cliente:gef('ef-ce-cli'),ce_dt:gef('ef-ce-dt')||null,ce_dur:parseInt(document.getElementById('ef-ce-dur')?.value)||null,ce_end:gef('ef-ce-end'),ce_cidade:gef('ef-ce-cid'),ce_estado:document.getElementById('ef-ce-est')?.value||'SP',ce_cep:gef('ef-ce-cep'),ce_km:gef('ef-ce-km')||null,ce_geo:gef('ef-ce-geo')};
+    try{await dbPatch('servicos',modalId,obj);}catch(e){alert('Erro: '+e.message);return;}
+    const s=servicos.find(x=>x.id===modalId);if(s)Object.assign(s,obj);renderSvcs();
+    // Atualiza no roteiro ativo também
+    if(rotAtivo){rotAtivo.steps.filter(x=>x.svcId===modalId).forEach(x=>{const p=svcToParadas(s).find(q=>q.stepTipo===x.stepTipo);if(p){const st=x.status,hr=x.horaReal;Object.assign(x,p);x.status=st;x.horaReal=hr;}});recalc();renderRot();}
+  }
+  closeModal();
+}
+function closeModal(){document.getElementById('modal').style.display='none';modalId=null;modalTipo=null;}
+
+// ===== MAPS =====
+function abrirMaps(){
+  if(!rotAtivo||!rotAtivo.steps.length)return;
+  const{v,steps}=rotAtivo;
+  const base=encodeURIComponent((v.cidade||'Base')+','+v.estado+',Brasil');
+  const sl=steps.slice(0,10);
+  const dest=encodeURIComponent([sl[sl.length-1].end,sl[sl.length-1].cidade,sl[sl.length-1].estado,'Brasil'].filter(Boolean).join(','));
+  const wps=sl.slice(0,-1).map(s=>encodeURIComponent([s.end,s.cidade,s.estado,'Brasil'].filter(Boolean).join(','))).join('|');
+  window.open('https://www.google.com/maps/dir/?api=1&origin='+base+'&destination='+dest+(wps?'&waypoints='+wps:'')+'&travelmode=driving','_blank');
+}
+function abrirMapsEst(est){
+  if(!rotAtivo)return;
+  const sl=rotAtivo.steps.filter(s=>s.estado===est).slice(0,10);if(!sl.length)return;
+  if(sl.length===1){window.open(mapsQ(sl[0].end,sl[0].cidade,sl[0].estado,sl[0].geo),'_blank');return;}
+  const orig=encodeURIComponent([sl[0].end,sl[0].cidade,sl[0].estado,'Brasil'].filter(Boolean).join(','));
+  const dest=encodeURIComponent([sl[sl.length-1].end,sl[sl.length-1].cidade,sl[sl.length-1].estado,'Brasil'].filter(Boolean).join(','));
+  const wps=sl.slice(1,-1).map(s=>encodeURIComponent([s.end,s.cidade,s.estado,'Brasil'].filter(Boolean).join(','))).join('|');
+  window.open('https://www.google.com/maps/dir/?api=1&origin='+orig+'&destination='+dest+(wps?'&waypoints='+wps:'')+'&travelmode=driving','_blank');
+}
+
+// ===== WHATSAPP =====
+function exportWA(){
+  if(!rotAtivo)return;
+  const{v,steps}=rotAtivo;
+  const totM=steps.reduce((a,s)=>a+s.travM+s.dur,0);
+  const hFim=fromM(toM(v.saida||'07:00')+totM);
+  const ests=[...new Set(steps.map(s=>s.estado))];
+  const kmIda=steps.reduce((a,s)=>a+(s.distKm||0),0);
+  const kmTotal=kmIda+Math.round(kmIda*.85);
+  let msg='*ROTEIRO DE SERVICOS*\n====================\n';
+  msg+='Veiculo: *'+v.placa+'* ('+v.tipo+')\n';
+  msg+='Motorista: *'+v.motorista+'*\n';
+  msg+='Saida: '+v.saida+' | Retorno: '+hFim+'\n';
+  msg+='Estados: '+ests.join(' -> ')+'\n';
+  msg+='KM est.: ~'+kmTotal+'km | Paradas: '+steps.length+'\n';
+  msg+='====================\n\n';
+  // Agrupa por serviço
+  const done=new Set();
+  steps.forEach(s=>{
+    if(done.has(s.svcId))return;
+    done.add(s.svcId);
+    const par=steps.filter(x=>x.svcId===s.svcId);
+    const col=par.find(x=>x.stepTipo==='coleta');
+    const ent=par.find(x=>x.stepTipo==='entrega');
+    const soC=par.find(x=>x.stepTipo==='so_coleta');
+    const soE=par.find(x=>x.stepTipo==='entrega_direta');
+    const loc=par.find(x=>['fixacao','remanejamento','icamento'].includes(x.stepTipo));
+    const ref=par[0];
+    const extras=(ref.nf?'\nNF: '+ref.nf:'')+(ref.serie?' | S/N: '+ref.serie:'')+(ref.qtd?' | Qtd: '+ref.qtd:'');
+    const stLine=(st)=>st&&st!=='pendente'?'\nStatus: '+stEmoji(st)+' '+stLabel(st)+(st==='concluido'&&ref.horaReal?' ('+ref.horaReal+')':''):'';
+    if(soC){
+      const a=[soC.end,soC.cidade,soC.estado,soC.cep].filter(Boolean).join(', ');
+      msg+='*'+soC.ordem+'. COLETA para o galpao*\n';
+      msg+='Servico: '+soC.svcNome+extras+'\n';
+      if(soC.cliente)msg+='Cliente: '+soC.cliente+'\n';
+      msg+=a+'\n';
+      msg+='Chegada: '+soC.cheg+' | Saida: '+soC.said;
+      if(soC.dt)msg+=' | '+fmtDT(soC.dt);
+      msg+=stLine(soC.status);
+      if(soC.obs)msg+='\nObs: '+soC.obs;
+      msg+='\nMaps: '+mapsQ(soC.end,soC.cidade,soC.estado,soC.geo)+'\n\n';
+      return;
+    }
+    if(soE){
+      const a=[soE.end,soE.cidade,soE.estado,soE.cep].filter(Boolean).join(', ');
+      msg+='*'+soE.ordem+'. ENTREGA (do galpao)*\n';
+      msg+='Servico: '+soE.svcNome+extras+'\n';
+      if(soE.cliente)msg+='Cliente: '+soE.cliente+'\n';
+      msg+=a+'\n';
+      msg+='Chegada: '+soE.cheg+' | Saida: '+soE.said;
+      if(soE.dt)msg+=' | '+fmtDT(soE.dt);
+      msg+=stLine(soE.status);
+      if(soE.obs)msg+='\nObs: '+soE.obs;
+      msg+='\nMaps: '+mapsQ(soE.end,soE.cidade,soE.estado,soE.geo)+'\n\n';
+      return;
+    }
+    if(loc){
+      const tNome={fixacao:'FIXACAO',remanejamento:'REMANEJAMENTO',icamento:'ICAMENTO'}[loc.stepTipo];
+      const a=[loc.end,loc.cidade,loc.estado,loc.cep].filter(Boolean).join(', ');
+      msg+='*'+loc.ordem+'. '+tNome+'*\n';
+      msg+='Servico: '+loc.svcNome+extras+'\n';
+      if(loc.cliente)msg+='Cliente: '+loc.cliente+'\n';
+      msg+=a+'\n';
+      msg+='Chegada: '+loc.cheg+' | Saida: '+loc.said;
+      if(loc.dt)msg+=' | '+fmtDT(loc.dt);
+      msg+=stLine(loc.status);
+      if(loc.obs)msg+='\nObs: '+loc.obs;
+      msg+='\nMaps: '+mapsQ(loc.end,loc.cidade,loc.estado,loc.geo)+'\n\n';
+      return;
+    }
+    if(col&&ent){
+      msg+='*'+col.ordem+'/'+ent.ordem+'. COLETA e ENTREGA*\n';
+      msg+='Servico: '+ref.svcNome+extras+'\n';
+      if(ref.obs)msg+='Obs: '+ref.obs+'\n';
+      msg+='----\n';
+      msg+='COLETA (parada '+col.ordem+')\n';
+      if(col.cliente)msg+='Cliente: '+col.cliente+'\n';
+      const ac=[col.end,col.cidade,col.estado,col.cep].filter(Boolean).join(', ');
+      msg+=ac+'\nChegada: '+col.cheg+' | Saida: '+col.said;
+      if(col.dt)msg+=' | '+fmtDT(col.dt);
+      msg+=stLine(col.status);
+      msg+='\nMaps: '+mapsQ(col.end,col.cidade,col.estado,col.geo)+'\n';
+      msg+='----\n';
+      msg+='ENTREGA (parada '+ent.ordem+')\n';
+      if(ent.cliente)msg+='Cliente: '+ent.cliente+'\n';
+      const ae=[ent.end,ent.cidade,ent.estado,ent.cep].filter(Boolean).join(', ');
+      msg+=ae+'\nChegada: '+ent.cheg+' | Saida: '+ent.said;
+      if(ent.dt)msg+=' | '+fmtDT(ent.dt);
+      msg+=stLine(ent.status);
+      msg+='\nMaps: '+mapsQ(ent.end,ent.cidade,ent.estado,ent.geo)+'\n\n';
+    }
+  });
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+
+// ===== EXCEL =====
+function exportXLS(){
+  if(!rotAtivo||!rotAtivo.steps.length){alert('Gere um roteiro primeiro.');return;}
+  const{v,steps}=rotAtivo;
+  const totM=steps.reduce((a,s)=>a+s.travM+s.dur,0);
+  const hFim=fromM(toM(v.saida||'07:00')+totM);
+  const kmIda=steps.reduce((a,s)=>a+(s.distKm||0),0);
+  const kmTotal=kmIda+Math.round(kmIda*.85);
+  const hoje=new Date();
+  const wb=XLSX.utils.book_new();
+  // Capa
+  const capa=[
+    ['ROTEIRO DE SERVIÇOS','','',''],
+    ['','','',''],
+    ['Veículo:',v.nome+' ('+v.placa+')','Motorista:',v.motorista],
+    ['Tipo:',v.tipo,'Base:',(v.cidade||'')+(v.estado?', '+v.estado:'')],
+    ['Galpão:',v.galpao||'','KM Saída:',v.km_ini||0],
+    ['Saída:',v.saida,'Retorno previsto:',hFim],
+    ['KM total est.:', '~'+kmTotal+'km','Duração est.:',Math.floor(totM/60)+'h'+p(totM%60)+'m'],
+    ['Total paradas:',steps.length,'Data:',p(hoje.getDate())+'/'+p(hoje.getMonth()+1)+'/'+hoje.getFullYear()],
+    ['','','',''],
+    ['Estados:',[...new Set(steps.map(s=>s.estado))].join(' → '),'',''],
+  ];
+  const wsCapa=XLSX.utils.aoa_to_sheet(capa);
+  wsCapa['!cols']=[{wch:20},{wch:35},{wch:20},{wch:30}];
+  XLSX.utils.book_append_sheet(wb,wsCapa,'Capa');
+  // Paradas
+  const cab=['Ordem','Tipo Parada','Serviço','Cliente','Endereço','Cidade','Estado','CEP','Data/Hora','Chegada Prev.','Saída Prev.','Duração (min)','NF','Nº Série','Qtd','Dist. Anterior (km)','Observação','Status','Hora Real','Link Maps'];
+  const linhas=steps.map(s=>{
+    const tl={coleta:'COLETA',entrega:'ENTREGA',so_coleta:'SÓ COLETA',entrega_direta:'ENTREGA DIRETA',fixacao:'FIXAÇÃO',remanejamento:'REMANEJAMENTO',icamento:'IÇAMENTO'}[s.stepTipo]||s.stepTipo.toUpperCase();
+    return[s.ordem,tl,s.svcNome||'',s.cliente||'',[s.end,s.cidade].filter(Boolean).join(', '),s.cidade||'',s.estado||'',s.cep||'',s.dt?fmtDT(s.dt):'',s.cheg||'',s.said||'',s.dur||30,s.nf||'',s.serie||'',s.qtd||'',s.distKm||0,s.obs||'',stLabel(s.status||'pendente'),s.horaReal||'',mapsQ(s.end,s.cidade,s.estado,s.geo)];
+  });
+  const ws=XLSX.utils.aoa_to_sheet([cab,...linhas]);
+  ws['!cols']=[{wch:8},{wch:16},{wch:28},{wch:24},{wch:35},{wch:18},{wch:8},{wch:12},{wch:18},{wch:12},{wch:12},{wch:12},{wch:14},{wch:18},{wch:8},{wch:14},{wch:28},{wch:14},{wch:10},{wch:50}];
+  XLSX.utils.book_append_sheet(wb,'Sequência de Paradas');
+  // Fix sheet ref
+  wb.Sheets['Sequência de Paradas']=ws;
+  // Resumo por serviço
+  const done2=new Set();
+  const linhaSvc=[];
+  steps.forEach(s=>{
+    if(done2.has(s.svcId))return;done2.add(s.svcId);
+    const par=steps.filter(x=>x.svcId===s.svcId);
+    const col=par.find(x=>x.stepTipo==='coleta'||x.stepTipo==='so_coleta'||['fixacao','remanejamento','icamento'].includes(x.stepTipo));
+    const ent=par.find(x=>x.stepTipo==='entrega'||x.stepTipo==='entrega_direta');
+    const ref=par[0];
+    linhaSvc.push([ref.svcNome||'',ref.nf||'',ref.serie||'',ref.qtd||'',TLABEL[ref.svcTipo]||'',col?col.cliente||'':'GALPÃO',col?(col.cidade||'')+(col.estado?'/'+col.estado:''):'GALPÃO',col&&col.dt?fmtDT(col.dt):'',ent?ent.cliente||'':'GALPÃO',ent?(ent.cidade||'')+(ent.estado?'/'+ent.estado:''):'GALPÃO',ent&&ent.dt?fmtDT(ent.dt):'',stLabel(ref.status||'pendente')]);
+  });
+  const ws2=XLSX.utils.aoa_to_sheet([['Serviço','NF','Nº Série','Qtd','Tipo','Coleta - Cliente','Coleta - Cidade/UF','Coleta - Data/Hora','Entrega - Cliente','Entrega - Cidade/UF','Entrega - Data/Hora','Status'],...linhaSvc]);
+  ws2['!cols']=[{wch:28},{wch:14},{wch:18},{wch:8},{wch:18},{wch:24},{wch:18},{wch:18},{wch:24},{wch:18},{wch:18},{wch:14}];
+  XLSX.utils.book_append_sheet(wb,ws2,'Resumo por Serviço');
+  XLSX.writeFile(wb,'Roteiro_'+v.placa+'_'+hoje.getFullYear()+p(hoje.getMonth()+1)+p(hoje.getDate())+'.xlsx');
+}
+
+// ===== SALVAR / HISTÓRICO =====
+async function salvarRot(){
+  if(!rotAtivo)return;
+  const{v,steps}=rotAtivo;
+  const totM=steps.reduce((a,s)=>a+s.travM+s.dur,0);
+  const hFim=fromM(toM(v.saida||'07:00')+totM);
+  const ests=[...new Set(steps.map(s=>s.estado))];
+  const kmIda=steps.reduce((a,s)=>a+(s.distKm||0),0);
+  const obj={id:'rot_'+Date.now(),veiculo_id:v.id,placa:v.placa,motorista:v.motorista,steps,h_saida:v.saida,h_fim:hFim,total_min:totM,km_total:kmIda+Math.round(kmIda*.85),ests,criado_por:USER.nome};
+  try{await dbPost('roteiros',obj);historico.unshift(obj);updCnts();alert('✅ Roteiro salvo! Disponível para toda a equipe.');}catch(e){alert('Erro ao salvar: '+e.message);}
+}
+
+
+async function restaurarHist(id){
+  const rot=historico.find(r=>r.id===id);
+  if(!rot){alert('Roteiro não encontrado.');return;}
+  if(!rot.steps||!rot.steps.length){alert('Este roteiro não tem paradas.');return;}
+
+  const v=veiculos.find(x=>String(x.id)===String(rot.veiculo_id));
+  if(!v){alert('Veículo do roteiro não encontrado. Cadastre o veículo primeiro.');return;}
+
+  if(!confirm('Restaurar '+rot.steps.length+' paradas do roteiro de '+rot.placa+' ('+rot.motorista+') como serviços?\n\nIsso vai criar os serviços no banco e abrir o roteiro.'))return;
+
+  // Deduplica por svcId — cada serviço único
+  const svcIds=new Set();
+  const stepsUnicos=rot.steps.filter(s=>{
+    // Para coleta_entrega, só processa uma vez por svcId
+    if(s.stepTipo==='entrega'||s.stepTipo==='entrega_direta'){
+      // Entrega será criada junto com a coleta
+      if(svcIds.has(s.svcId))return false;
+    }
+    if(svcIds.has(s.svcId))return false;
+    svcIds.add(s.svcId);
+    return true;
+  });
+
+  let criados=0,erros=0;
+  for(const step of stepsUnicos){
+    // Monta o serviço baseado no step e seu par (se tiver entrega)
+    const entrega=rot.steps.find(x=>x.svcId===step.svcId&&(x.stepTipo==='entrega'||x.stepTipo==='entrega_direta'));
+    const tipo=step.svcTipo||step.stepTipo||'coleta_entrega';
+    const obj={
+      nome:step.svcNome||'Serviço restaurado',
+      tipo:tipo,
+      nf:step.nf||null,serie:step.serie||null,qtd:step.qtd||null,
+      dur:step.dur||30,data:step.dt?step.dt.split('T')[0]:null,
+      obs:step.obs||null,veiculo_id:v.id,added_by:USER.nome,
+      // Coleta / local
+      cc_cliente:step.cliente||null,
+      cc_dt:step.dt||null,
+      cc_dur:step.dur||null,
+      cc_end:step.end||null,
+      cc_cidade:step.cidade||null,
+      cc_estado:step.estado||'SP',
+      cc_cep:step.cep||null,
+      cc_km:step.km||null,
+      cc_geo:step.geo||null,
+      // Entrega
+      ce_cliente:entrega?entrega.cliente:null,
+      ce_dt:entrega?entrega.dt:null,
+      ce_dur:entrega?entrega.dur:null,
+      ce_end:entrega?entrega.end:null,
+      ce_cidade:entrega?entrega.cidade:null,
+      ce_estado:entrega?entrega.estado||'SP':null,
+      ce_cep:entrega?entrega.cep:null,
+      ce_km:entrega?entrega.km:null,
+      ce_geo:entrega?entrega.geo:null,
+    };
+    try{
+      const res=await dbPost('servicos',obj);
+      const saved=res[0]||{...obj,id:Date.now()+criados};
+      servicos.push(saved);
+      criados++;
+    }catch(e){
+      console.warn('Erro ao restaurar serviço:',e.message);
+      erros++;
+    }
+  }
+
+  updCnts();renderSvcs();renderV();
+
+  // Abre o roteiro
+  rotAtivo={v,steps:[...rot.steps]};
+  recalc();renderRot();
+  ST('r');
+
+  alert('✅ '+criados+' serviço(s) restaurado(s) com sucesso!'+(erros>0?' ('+erros+' com erro)':'')+'\n\nO roteiro foi aberto na aba Roteiros.');
+}
+
+function renderH(){
+  updCnts();
+  const el=document.getElementById('hist-body');
+  if(!historico.length){el.innerHTML='<div class="empty">Nenhum roteiro salvo.</div>';return;}
+  // Add restore button at top
+  let html2='<div style="background:#fff3e0;border:1px solid #ffcc80;border-radius:var(--r);padding:10px 14px;margin-bottom:12px;font-size:13px;color:#e65100">';
+  html2+='<strong>💡 Dica:</strong> Clique em <strong>"Restaurar"</strong> para recuperar os serviços de um roteiro salvo e reabri-lo no roteiro ativo.';
+  html2+='</div>';
+  el.innerHTML=html2+historico.map(r=>{
+    const dt=new Date(r.criado_em);
+    const ds=p(dt.getDate())+'/'+p(dt.getMonth()+1)+'/'+dt.getFullYear()+' '+p(dt.getHours())+':'+p(dt.getMinutes());
+    return '<div class="saved-card"><div style="width:40px;height:40px;border-radius:50%;background:var(--blue-lt);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🗺️</div><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:700">'+r.placa+' · '+r.motorista+'</div><div style="font-size:11px;color:var(--text2)">'+(r.steps||[]).length+' paradas · '+(r.ests||[]).join('→')+' · '+ds+' · '+r.criado_por+' · ret. '+r.h_fim+' · ~'+(r.km_total||0)+'km</div></div>'
+      +'<button class="btn bg sm" onclick="restaurarHist(\''+r.id+'\')">&#9851; Restaurar</button>'
+      +'<button class="btn bb sm" onclick="abrirHist(\''+r.id+'\')">Abrir</button>'
+      +'<button class="btn br sm" onclick="delHist(\''+r.id+'\')">✕</button></div>';
+  }).join('');
+}
+
+function abrirHist(id){
+  const rot=historico.find(r=>r.id===id);if(!rot)return;
+  const v=veiculos.find(x=>String(x.id)===String(rot.veiculo_id))||{id:rot.veiculo_id,placa:rot.placa,motorista:rot.motorista,tipo:'',cidade:'Base',estado:'SP',saida:rot.h_saida,cap:300,km_ini:0,galpao:'',nome:rot.placa};
+  rotAtivo={v,steps:[...(rot.steps||[])]};
+  recalc();renderRot();ST('r');
+}
+
+async function delHist(id){
+  if(!confirm('Excluir este roteiro?'))return;
+  try{await dbDel('roteiros',id);}catch(e){alert('Erro: '+e.message);return;}
+  historico=historico.filter(r=>r.id!==id);renderH();
+}
+
+// ===== TABS =====
+function ST(t){
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.pnl').forEach(x=>x.classList.remove('on'));
+  const map={v:0,s:1,r:2,h:3};
+  document.querySelectorAll('.tab')[map[t]].classList.add('on');
+  document.getElementById('pnl-'+t).classList.add('on');
+  if(t==='r'&&!rotAtivo)renderRoteiroGeral();
+  if(t==='h'){loadH().then(()=>renderH());}
+}
+
+function renderRoteiroGeral(){
+  if(!veiculos.length){document.getElementById('rot-body').innerHTML='<div class="empty">Cadastre ao menos um veículo.</div>';return;}
+  let html='<div style="font-size:12px;color:var(--text2);margin-bottom:12px">Selecione um veículo para roteirizar:</div>';
+  veiculos.forEach(v=>{
+    const n=servicos.filter(s=>!s.veiculo_id||String(s.veiculo_id)===String(v.id)).length;
+    html+='<div class="veh-card" style="display:flex;align-items:center;gap:14px"><div style="flex:1"><div style="font-size:14px;font-weight:700">'+v.placa+' · '+v.motorista+'</div><div style="font-size:12px;color:var(--text2)">'+v.tipo+' · '+(v.cidade||'Base')+', '+v.estado+' · Saída '+v.saida+' · '+n+' serviço(s)</div></div><button class="btn bb" onclick="gerarRota('+v.id+')">🗺️ Roteirizar</button></div>';
+  });
+  document.getElementById('rot-body').innerHTML=html;
+}
+</script>
+
+
+</body></html>
